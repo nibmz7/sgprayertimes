@@ -17,6 +17,7 @@ gen/
 out/
 build/
 release/
+lib/
 
 # Local configuration file (sdk path, etc)
 local.properties
