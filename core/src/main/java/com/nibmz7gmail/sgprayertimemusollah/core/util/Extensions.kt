@@ -19,7 +19,7 @@ fun Context.showToast(message: String, length: Int) {
         .show()
 }
 
-fun Date.toString(format: String = "dd/M/yyyy", locale: Locale = Locale.getDefault()): String {
+fun Date.toString(format: String, locale: Locale = Locale.getDefault()): String {
     val formatter = SimpleDateFormat(format, locale)
     return formatter.format(this)
 }

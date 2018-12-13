@@ -9,9 +9,8 @@ import java.io.InputStreamReader
 
 object CalendarDataJsonParser {
 
-    fun parseConferenceData(source: BufferedSource): List<CalendarData>? {
+    fun parseConferenceData(source: String): List<CalendarData>? {
 
-        val reader = JsonReader.of(source)
         val moshi = Moshi.Builder()
             .add(KotlinJsonAdapterFactory())
             .build()
@@ -19,7 +18,7 @@ object CalendarDataJsonParser {
         val type = Types.newParameterizedType(List::class.java, CalendarData::class.java)
         val calendarDataAdapter = moshi.adapter<List<CalendarData>>(type)
 
-        return calendarDataAdapter.fromJson(reader)
+        return calendarDataAdapter.fromJson(source)
     }
 
 }

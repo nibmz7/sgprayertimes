@@ -15,7 +15,7 @@ android {
         versionCode 1
         versionName "1.0"
 
-        buildConfigField "String", "CALENDAR_DATA_URL", "\"https://storage.googleapis.com/adssched-prod.appspot.com/conference_data_2018.json\""
+        buildConfigField "String", "CALENDAR_DATA_URL", "\"https://sg-prayer-times.firebaseapp.com/prayer_times.json\""
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 

@@ -10,6 +10,6 @@ import com.squareup.moshi.Json
 data class CalendarData (
     @Json(name = "dtN") @PrimaryKey val date: String,
     @Json(name = "dN") val day: Int,
-    @Embedded val prayerTimes: PrayerTimes,
-    @Embedded val hijriDate: HijriDate
+    @Json(name = "P")@Embedded val prayerTimes: PrayerTimes,
+    @Json(name = "H")@Embedded val hijriDate: HijriDate
 )

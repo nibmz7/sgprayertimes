@@ -4,13 +4,12 @@ import androidx.lifecycle.LiveData
 import com.nibmz7gmail.sgprayertimemusollah.core.data.calendar.CalendarDataRepository
 import com.nibmz7gmail.sgprayertimemusollah.core.model.CalendarData
 import javax.inject.Inject
-import android.content.ComponentName
-import android.appwidget.AppWidgetManager
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import com.nibmz7gmail.sgprayertimemusollah.core.AsyncScheduler
 import com.nibmz7gmail.sgprayertimemusollah.core.result.Result
-import java.lang.Exception
+import com.nibmz7gmail.sgprayertimemusollah.core.util.toString
+import timber.log.Timber
 import java.util.*
 
 enum class ErrorTypes{
@@ -35,6 +34,8 @@ class LoadTodaysDataUseCase @Inject constructor(
             return
         }
 
+        fetchNewData(currentDate)
+
     }
 
     operator fun invoke(isWidget: Boolean): CalendarData? {
@@ -55,10 +56,13 @@ class LoadTodaysDataUseCase @Inject constructor(
             if(it.date == currentDate) return
         }
 
+        Timber.e("Fetching new data")
+
         AsyncScheduler.execute {
             todaysDataCache = calendarDataRepository.getTodaysData(currentDate)
 
             if(todaysDataCache == null) {
+
                 _liveData.postValue(Result.Loading)
 
                 val success = calendarDataRepository.refreshCalendarData()
@@ -77,6 +81,11 @@ class LoadTodaysDataUseCase @Inject constructor(
                 } else {
                     _liveData.postValue(Result.Error(ErrorTypes.NETWORK))
                 }
+            } else {
+                todaysDataCache?.let{
+                    _liveData.postValue(Result.Success(it))
+                    notiftWidgets()
+                }
             }
 
         }
@@ -90,6 +99,6 @@ class LoadTodaysDataUseCase @Inject constructor(
 //        appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.listview)
     }
 
-    fun currentDate(): String = Calendar.getInstance().time.toString()
+    fun currentDate(): String = Calendar.getInstance().time.toString("dd/M/yyyy")
 
 }

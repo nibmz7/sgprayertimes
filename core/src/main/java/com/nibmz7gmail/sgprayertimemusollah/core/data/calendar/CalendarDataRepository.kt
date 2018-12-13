@@ -9,6 +9,7 @@ import com.nibmz7gmail.sgprayertimemusollah.core.data.calendar.remote.RemoteCale
 import com.nibmz7gmail.sgprayertimemusollah.core.data.calendar.remote.RemoteDataSource
 import com.nibmz7gmail.sgprayertimemusollah.core.model.CalendarData
 import com.nibmz7gmail.sgprayertimemusollah.core.util.toString
+import timber.log.Timber
 import java.io.IOException
 import java.util.*
 import javax.inject.Inject
@@ -16,7 +17,6 @@ import javax.inject.Singleton
 
 @Singleton
 open class CalendarDataRepository @Inject constructor(
-    private val calendarDb: CalendarRoomDatabase,
     private val calendarDao: CalendarDao,
     private val remoteCalendarDataSource: RemoteDataSource
 ) {
@@ -30,7 +30,7 @@ open class CalendarDataRepository @Inject constructor(
         return calendarDao.findByDate(date)
     }
 
-    fun getAllData(): LiveData<CalendarData> {
+    fun getAllData(): LiveData<List<CalendarData>> {
         val result = MutableLiveData<List<CalendarData>>()
         if(calendarDataCache != null) result.value = calendarDataCache
         else {
@@ -39,7 +39,7 @@ open class CalendarDataRepository @Inject constructor(
                 result.postValue(calendarDataCache)
             }
         }
-        return result as LiveData<CalendarData>
+        return result
     }
 
     fun refreshCalendarData(): Boolean {
@@ -48,6 +48,7 @@ open class CalendarDataRepository @Inject constructor(
         val calendarData = try {
             remoteCalendarDataSource.getRemoteCalendarData()
         } catch (e: IOException) {
+            Timber.e(e)
             latestException = e
             throw e
         } ?: return false

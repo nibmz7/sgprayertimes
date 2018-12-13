@@ -16,23 +16,22 @@ class RemoteCalendarDataSource @Inject constructor(
 ) : RemoteDataSource {
 
     override fun getRemoteCalendarData(): List<CalendarData>? {
-        if (context.isConnectedToInternet()) {
-            Timber.d("Network not connected")
+        if (!context.isConnectedToInternet()) {
+            Timber.e("Network not connected")
             return null
         }
 
-        Timber.d("Trying to download data from network")
+        Timber.e("Trying to download data from network")
         val responseSource = try {
             CalendarDataDownloader(context).fetch()
         } catch (e: IOException) {
             Timber.e(e)
             throw e
         }
-        val body = responseSource.body()?.source() ?: return null
+        val jsonData = responseSource.body()?.string() ?: return null
 
-        Timber.d("Parsing new data")
         val parsedData = try {
-            CalendarDataJsonParser.parseConferenceData(body)
+            CalendarDataJsonParser.parseConferenceData(jsonData)
         } catch (e: RuntimeException) {
             Timber.e(e, "Error parsing cached data")
             null
