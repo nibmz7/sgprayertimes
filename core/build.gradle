@@ -15,6 +15,8 @@ android {
         versionCode 1
         versionName "1.0"
 
+        buildConfigField "String", "CALENDAR_DATA_URL", "\"https://storage.googleapis.com/adssched-prod.appspot.com/conference_data_2018.json\""
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
     }
@@ -29,7 +31,6 @@ android {
 }
 
 dependencies {
-    api project(":model")
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     // Architecture Components
@@ -53,8 +54,18 @@ dependencies {
     kapt "com.google.dagger:dagger-compiler:$rootProject.dagger"
     kapt "com.google.dagger:dagger-android-processor:$rootProject.dagger"
 
+    //room
+    implementation "androidx.room:room-runtime:$rootProject.roomVersion"
+    kapt "androidx.room:room-compiler:$rootProject.roomVersion"
+
+    //moshi
+    implementation "com.squareup.moshi:moshi-kotlin:$rootProject.moshiVersion"
+
     // Unit tests
     testImplementation "junit:junit:$rootProject.junitVersion"
     testImplementation "org.hamcrest:hamcrest-library:$rootProject.hamcrestVersion"
     testImplementation "org.mockito:mockito-core:$rootProject.mockitoVersion"
+
+    // Room test
+    androidTestImplementation "androidx.room:room-testing:$rootProject.roomVersion"
 }

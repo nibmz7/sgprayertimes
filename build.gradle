@@ -22,10 +22,12 @@ buildscript {
         googleServicesVersion = "3.2.0"
         kotlinVersion = '1.2.61'
         lifecycleVersion = '2.0.0'
+        roomVersion = '2.0.0'
         materialVersion = '1.0.0-rc01'
         okhttpVersion = "3.10.0"
         okioVersion = '1.14.0'
         timberVersion = "4.7.1"
+        moshiVersion = "1.8.0"
 
         //test
         junitVersion = '4.12'

@@ -1,4 +1,4 @@
-package com.nibmz7gmail.sgprayertimemusollah.model
+package com.nibmz7gmail.sgprayertimemusollah.core.model
 
 data class Mosque(
     val id: Int,
