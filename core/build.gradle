@@ -61,6 +61,9 @@ dependencies {
     //moshi
     implementation "com.squareup.moshi:moshi-kotlin:$rootProject.moshiVersion"
 
+    //Play services Location API
+    implementation "com.google.android.gms:play-services-location:$rootProject.locationVersion"
+
     // Unit tests
     testImplementation "junit:junit:$rootProject.junitVersion"
     testImplementation "org.hamcrest:hamcrest-library:$rootProject.hamcrestVersion"

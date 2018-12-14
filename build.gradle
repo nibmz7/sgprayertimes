@@ -28,6 +28,7 @@ buildscript {
         okioVersion = '1.14.0'
         timberVersion = "4.7.1"
         moshiVersion = "1.8.0"
+        locationVersion = "16.0.0"
 
         //test
         junitVersion = '4.12'

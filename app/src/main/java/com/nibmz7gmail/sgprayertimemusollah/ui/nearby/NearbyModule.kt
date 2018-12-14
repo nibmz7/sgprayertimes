@@ -1,4 +1,4 @@
-package com.nibmz7gmail.sgprayertimemusollah.ui.prayertimes
+package com.nibmz7gmail.sgprayertimemusollah.ui.nearby
 
 import androidx.lifecycle.ViewModel
 import com.nibmz7gmail.sgprayertimemusollah.core.di.FragmentScoped
@@ -9,15 +9,17 @@ import dagger.android.ContributesAndroidInjector
 import dagger.multibindings.IntoMap
 
 @Module
-abstract class PrayerTimesModule {
+abstract class NearbyModule {
 
 	@FragmentScoped
 	@ContributesAndroidInjector
-	internal abstract fun contributePrayerTimesFragment(): PrayerTimesFragment
+	internal abstract fun contributePrayerTimesFragment(): NearbyFragment
 
 	@Binds
 	@IntoMap
-	@ViewModelKey(PrayerTimesViewModel::class)
-	abstract fun bindMainViewModel(viewModel: PrayerTimesViewModel): ViewModel
+	@ViewModelKey(NearbyViewModel::class)
+	abstract fun bindMainViewModel(viewModel: NearbyViewModel): ViewModel
+
+
 
 }

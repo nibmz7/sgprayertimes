@@ -3,6 +3,7 @@ package com.nibmz7gmail.sgprayertimemusollah.core.data.calendar.remote
 import android.content.Context
 import com.nibmz7gmail.sgprayertimemusollah.core.model.CalendarData
 import com.nibmz7gmail.sgprayertimemusollah.core.util.isConnectedToInternet
+import com.nibmz7gmail.sgprayertimemusollah.core.util.toListItems
 import timber.log.Timber
 import java.io.IOException
 import javax.inject.Inject
@@ -31,7 +32,7 @@ class RemoteCalendarDataSource @Inject constructor(
         val jsonData = responseSource.body()?.string() ?: return null
 
         val parsedData = try {
-            CalendarDataJsonParser.parseConferenceData(jsonData)
+            jsonData.toListItems<CalendarData>()
         } catch (e: RuntimeException) {
             Timber.e(e, "Error parsing cached data")
             null
