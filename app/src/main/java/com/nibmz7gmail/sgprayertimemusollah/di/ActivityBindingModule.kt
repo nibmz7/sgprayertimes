@@ -19,6 +19,7 @@ import com.nibmz7gmail.sgprayertimemusollah.MainActivity
 import com.nibmz7gmail.sgprayertimemusollah.core.di.ActivityScoped
 import com.nibmz7gmail.sgprayertimemusollah.ui.nearby.NearbyModule
 import com.nibmz7gmail.sgprayertimemusollah.ui.prayertimes.PrayerTimesModule
+import com.nibmz7gmail.sgprayertimemusollah.ui.qibla.QiblaModule
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -38,7 +39,8 @@ abstract class ActivityBindingModule {
     @ContributesAndroidInjector(
         modules = [
             PrayerTimesModule::class,
-            NearbyModule::class
+            NearbyModule::class,
+            QiblaModule::class
         ]
     )
     internal abstract fun MainActivity(): MainActivity

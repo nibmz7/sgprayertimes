@@ -24,6 +24,7 @@ import com.nibmz7gmail.sgprayertimemusollah.R
 import com.nibmz7gmail.sgprayertimemusollah.core.result.Result
 import com.nibmz7gmail.sgprayertimemusollah.core.util.activityViewModelProvider
 import com.nibmz7gmail.sgprayertimemusollah.core.util.showToast
+import com.nibmz7gmail.sgprayertimemusollah.ui.qibla.QiblaViewModel
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_nearby.*
 import timber.log.Timber
@@ -32,7 +33,7 @@ import javax.inject.Inject
 class NearbyFragment : DaggerFragment(), MainNavigationFragment {
 
     @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
-    private var viewModel: NearbyViewModel? = null
+    private lateinit var viewModel: NearbyViewModel
     private var isSearching: Boolean = false
 
 
@@ -47,7 +48,7 @@ class NearbyFragment : DaggerFragment(), MainNavigationFragment {
         //Tied to activity lifecycle
         viewModel = activityViewModelProvider(viewModelFactory)
 
-        viewModel?.nearbyMosqueObservable?.observe(this, Observer {
+        viewModel.nearbyMosqueObservable.observe(this, Observer {
 
             if(it is Result.Success) {
                 val sb = StringBuilder()
@@ -63,13 +64,6 @@ class NearbyFragment : DaggerFragment(), MainNavigationFragment {
             startLocationPermissionRequest()
         }
 
-    }
-
-    private fun requestUpdates() {
-        if(checkPermissions() && !isSearching){
-            viewModel?.startSearching()
-            isSearching = true
-        }
     }
 
     private fun showSnackbar(
@@ -122,18 +116,6 @@ class NearbyFragment : DaggerFragment(), MainNavigationFragment {
             }
         }
     }
-
-    override fun onPause() {
-        super.onPause()
-        viewModel?.stopSearching()
-        isSearching = false
-    }
-
-    override fun onResume() {
-        super.onResume()
-        requestUpdates()
-    }
-
 
     override fun onBackPressed(): Boolean {
         return true

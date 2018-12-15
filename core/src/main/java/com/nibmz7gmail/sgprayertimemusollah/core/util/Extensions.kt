@@ -7,9 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.*
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -27,6 +25,10 @@ fun Context.isConnectedToInternet(): Boolean {
 fun Context.showToast(message: String, length: Int) {
     Toast.makeText(this, message, length)
         .show()
+}
+
+fun <X, Y> LiveData<X>.switchMap(body: (X) -> LiveData<Y>): LiveData<Y> {
+    return Transformations.switchMap(this, body)
 }
 
 fun Date.toString(format: String, locale: Locale = Locale.getDefault()): String {

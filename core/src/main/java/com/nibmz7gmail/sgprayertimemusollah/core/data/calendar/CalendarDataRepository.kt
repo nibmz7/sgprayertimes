@@ -15,8 +15,7 @@ import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
 
-@Singleton
-open class CalendarDataRepository @Inject constructor(
+class CalendarDataRepository @Inject constructor(
     private val calendarDao: CalendarDao,
     private val remoteCalendarDataSource: RemoteDataSource
 ) {

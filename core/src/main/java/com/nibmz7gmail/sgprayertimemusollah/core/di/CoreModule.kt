@@ -3,10 +3,14 @@ package com.nibmz7gmail.sgprayertimemusollah.core.di
 import android.app.Application
 import android.content.Context
 import androidx.room.Room
+import com.nibmz7gmail.sgprayertimemusollah.core.data.LocationLiveData
 import com.nibmz7gmail.sgprayertimemusollah.core.data.calendar.CalendarDataRepository
 import com.nibmz7gmail.sgprayertimemusollah.core.data.calendar.local.CalendarDao
 import com.nibmz7gmail.sgprayertimemusollah.core.data.calendar.local.CalendarRoomDatabase
 import com.nibmz7gmail.sgprayertimemusollah.core.data.calendar.remote.RemoteCalendarDataSource
+import com.nibmz7gmail.sgprayertimemusollah.core.data.mosque.MosqueDataSource
+import com.nibmz7gmail.sgprayertimemusollah.core.data.mosque.NearbyMosqueLocator
+import com.nibmz7gmail.sgprayertimemusollah.core.data.qiblafinder.QiblaCompass
 import com.nibmz7gmail.sgprayertimemusollah.core.domain.LoadTodaysDataUseCase
 import dagger.Module
 import dagger.Provides
@@ -46,5 +50,29 @@ class CoreModule {
     @Provides
     fun provideGetTodaysDataUseCase(context: Context, calendarDataRepository: CalendarDataRepository): LoadTodaysDataUseCase {
         return LoadTodaysDataUseCase(context, calendarDataRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideMosqueDataSource(context: Context): MosqueDataSource {
+        return MosqueDataSource(context)
+    }
+
+    @Singleton
+    @Provides
+    fun provideNearbyMosqueLocator(mosqueDataSource: MosqueDataSource): NearbyMosqueLocator {
+        return NearbyMosqueLocator(mosqueDataSource)
+    }
+
+    @Singleton
+    @Provides
+    fun provideQiblaCompass(context: Context): QiblaCompass {
+        return QiblaCompass(context)
+    }
+
+    @Singleton
+    @Provides
+    fun provideLocationLiveData(context: Context): LocationLiveData {
+        return LocationLiveData(context, 100)
     }
 }

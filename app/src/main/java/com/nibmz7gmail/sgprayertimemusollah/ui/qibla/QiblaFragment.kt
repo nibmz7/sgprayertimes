@@ -1,9 +1,11 @@
-package com.nibmz7gmail.sgprayertimemusollah.ui.prayertimes
+package com.nibmz7gmail.sgprayertimemusollah.ui.qibla
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation.RELATIVE_TO_SELF
+import android.view.animation.RotateAnimation
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -14,20 +16,21 @@ import com.nibmz7gmail.sgprayertimemusollah.core.model.CalendarData
 import com.nibmz7gmail.sgprayertimemusollah.core.result.Result
 import com.nibmz7gmail.sgprayertimemusollah.core.util.activityViewModelProvider
 import com.nibmz7gmail.sgprayertimemusollah.ui.nearby.NearbyFragment
-import com.nibmz7gmail.sgprayertimemusollah.ui.qibla.QiblaFragment
+import com.nibmz7gmail.sgprayertimemusollah.ui.prayertimes.PrayerTimesViewModel
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_prayertimes.*
+import kotlinx.android.synthetic.main.fragment_qibla.*
 import timber.log.Timber
 import javax.inject.Inject
 
-class PrayerTimesFragment : DaggerFragment(), MainNavigationFragment {
+class QiblaFragment : DaggerFragment(), MainNavigationFragment {
 
     @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
-    private lateinit var viewModel: PrayerTimesViewModel
+    private lateinit var viewModel: QiblaViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_prayertimes, container, false)
+        return inflater.inflate(R.layout.fragment_qibla, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -35,36 +38,25 @@ class PrayerTimesFragment : DaggerFragment(), MainNavigationFragment {
 
         viewModel = activityViewModelProvider(viewModelFactory)
 
-        viewModel.calendarDataObservable.observe(this, Observer(::handleUpdates))
+        viewModel.calendarDataObservable.observe(this, Observer {
 
-        viewModel.getPrayerTimes()
+            if(it is Result.Success){
 
-        button.setOnClickListener {
-            (requireActivity() as MainActivity).addFragment(NearbyFragment(), FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-        }
+                val rotateAnimation = RotateAnimation(
+                    it.data[0],
+                    it.data[1],
+                    RELATIVE_TO_SELF, 0.5f,
+                    RELATIVE_TO_SELF, 0.5f)
+                rotateAnimation.duration = 210
+                rotateAnimation.fillAfter = true
 
-        button2.setOnClickListener {
-            (requireActivity() as MainActivity).addFragment(QiblaFragment(), FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-        }
-    }
-
-    private fun handleUpdates(result: Result<CalendarData>) {
-        when(result) {
-            is Result.Success -> {
-                Timber.i("${result.data}")
-                textView.text = result.data.toString()
+                needle.startAnimation(rotateAnimation)
             }
-            is Result.Error -> {
-                Timber.i("Error ${result.errorType}")
-            }
+        })
 
-            is Result.Loading -> {
-                Timber.i("Loading...")
-            }
-        }
     }
 
     override fun onBackPressed(): Boolean {
-        return false
+        return true
     }
 }
