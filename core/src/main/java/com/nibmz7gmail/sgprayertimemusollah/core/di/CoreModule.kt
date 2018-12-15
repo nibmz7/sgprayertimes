@@ -11,7 +11,6 @@ import com.nibmz7gmail.sgprayertimemusollah.core.data.calendar.remote.RemoteCale
 import com.nibmz7gmail.sgprayertimemusollah.core.data.mosque.MosqueDataSource
 import com.nibmz7gmail.sgprayertimemusollah.core.data.mosque.NearbyMosqueLocator
 import com.nibmz7gmail.sgprayertimemusollah.core.data.qiblafinder.QiblaCompass
-import com.nibmz7gmail.sgprayertimemusollah.core.domain.LoadTodaysDataUseCase
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -44,12 +43,6 @@ class CoreModule {
     @Provides
     fun provideCalendarDataRepo(calendarDao: CalendarDao, remoteCalendarDataSource: RemoteCalendarDataSource): CalendarDataRepository {
         return CalendarDataRepository(calendarDao, remoteCalendarDataSource)
-    }
-
-    @Singleton
-    @Provides
-    fun provideGetTodaysDataUseCase(calendarDataRepository: CalendarDataRepository): LoadTodaysDataUseCase {
-        return LoadTodaysDataUseCase(calendarDataRepository)
     }
 
     @Singleton
