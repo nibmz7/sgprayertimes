@@ -22,14 +22,15 @@ class RemoteCalendarDataSource @Inject constructor(
             return null
         }
 
-        Timber.e("Trying to download data from network")
+        Timber.i("Trying to download data from network")
         val responseSource = try {
             CalendarDataDownloader(context).fetch()
-        } catch (e: IOException) {
+        } catch (e: Exception) {
             Timber.e(e)
-            throw e
+            null
         }
-        val jsonData = responseSource.body()?.string() ?: return null
+
+        val jsonData = responseSource?.body()?.string() ?: return null
 
         val parsedData = try {
             jsonData.toListItems<CalendarData>()

@@ -51,7 +51,6 @@ class PrayerTimesFragment : DaggerFragment(), MainNavigationFragment {
     private fun handleUpdates(result: Result<CalendarData>) {
         when(result) {
             is Result.Success -> {
-                Timber.i("${result.data}")
                 textView.text = result.data.toString()
             }
             is Result.Error -> {

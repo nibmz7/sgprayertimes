@@ -11,10 +11,10 @@ import com.nibmz7gmail.sgprayertimemusollah.core.model.CalendarData
 interface CalendarDao {
 
     @Query("SELECT * FROM calendar_table")
-    fun getAll(): List<CalendarData>
+    fun getAll(): LiveData<List<CalendarData>>
 
     @Query("SELECT * FROM calendar_table WHERE date LIKE :date LIMIT 1")
-    fun findByDate(date: String): CalendarData
+    fun findByDate(date: String): CalendarData?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(vararg datas: CalendarData)

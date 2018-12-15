@@ -19,31 +19,19 @@ class CalendarDataRepository @Inject constructor(
     private val calendarDao: CalendarDao,
     private val remoteCalendarDataSource: RemoteDataSource
 ) {
-    // In-memory cache of the calendar data
-    private var calendarDataCache: List<CalendarData>? = null
 
     var latestException: Exception? = null
         private set
 
-    fun getTodaysData(date: String): CalendarData {
+    fun getTodaysData(date: String): CalendarData? {
         return calendarDao.findByDate(date)
     }
 
     fun getAllData(): LiveData<List<CalendarData>> {
-        val result = MutableLiveData<List<CalendarData>>()
-        if(calendarDataCache != null) result.value = calendarDataCache
-        else {
-            AsyncScheduler.execute {
-                calendarDataCache = calendarDao.getAll()
-                result.postValue(calendarDataCache)
-            }
-        }
-        return result
+        return calendarDao.getAll()
     }
 
     fun refreshCalendarData(): Boolean {
-        if(calendarDataCache != null) return true
-
         val calendarData = try {
             remoteCalendarDataSource.getRemoteCalendarData()
         } catch (e: IOException) {
@@ -52,7 +40,6 @@ class CalendarDataRepository @Inject constructor(
             throw e
         } ?: return false
 
-        calendarDataCache = calendarData
         calendarDao.insertAll(*calendarData.toTypedArray())
 
         return true

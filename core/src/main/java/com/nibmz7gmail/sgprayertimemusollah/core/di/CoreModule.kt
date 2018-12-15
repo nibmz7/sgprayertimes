@@ -48,8 +48,8 @@ class CoreModule {
 
     @Singleton
     @Provides
-    fun provideGetTodaysDataUseCase(context: Context, calendarDataRepository: CalendarDataRepository): LoadTodaysDataUseCase {
-        return LoadTodaysDataUseCase(context, calendarDataRepository)
+    fun provideGetTodaysDataUseCase(calendarDataRepository: CalendarDataRepository): LoadTodaysDataUseCase {
+        return LoadTodaysDataUseCase(calendarDataRepository)
     }
 
     @Singleton

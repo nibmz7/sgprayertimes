@@ -17,13 +17,8 @@ class CalendarDataDownloader(
 
         val protocols = arrayListOf(Protocol.HTTP_1_1, Protocol.HTTP_2) // Support h2
 
-        val cacheSize = 2L * 1024 * 1024 // 2 MiB
-        val cacheDir = context.getDir("conference_data", Context.MODE_PRIVATE)
-        val cache = Cache(cacheDir, cacheSize)
-
         OkHttpClient.Builder()
             .protocols(protocols)
-            .cache(cache)
             .addInterceptor(logInterceptor)
             .build()
     }
@@ -41,7 +36,6 @@ class CalendarDataDownloader(
 
         val request = Request.Builder()
             .url(httpBuilder.build())
-            .cacheControl(CacheControl.FORCE_NETWORK)
             .build()
 
         // Blocking call
