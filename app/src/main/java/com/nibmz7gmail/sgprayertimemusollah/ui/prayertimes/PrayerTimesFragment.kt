@@ -40,17 +40,6 @@ class PrayerTimesFragment : DaggerFragment(), MainNavigationFragment {
 
         viewModel.getPrayerTimes()
 
-        button.setOnClickListener {
-            (requireActivity() as MainActivity).addFragment(NearbyFragment(), FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-        }
-
-        button2.setOnClickListener {
-            (requireActivity() as MainActivity).addFragment(QiblaFragment(), FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-        }
-
-        button3.setOnClickListener {
-            (requireActivity() as MainActivity).addFragment(CalendarFragment(), FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-        }
     }
 
     private fun handleUpdates(result: Result<CalendarData>) {

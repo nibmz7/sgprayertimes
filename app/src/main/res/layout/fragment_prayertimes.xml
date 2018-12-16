@@ -12,21 +12,4 @@
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
             android:textColor="@android:color/black"
             android:id="@+id/textView"/>
-    <Button
-            android:text="Nearby"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/button"/>
-
-    <Button
-            android:text="Qibla"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/button2"/>
-
-    <Button
-            android:text="Calendar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/button3"/>
 </LinearLayout>

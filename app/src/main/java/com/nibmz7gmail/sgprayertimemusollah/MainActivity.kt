@@ -12,12 +12,17 @@ import kotlinx.android.synthetic.main.activity_main.*
 import android.view.View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
 import android.view.WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS
 import android.os.Build
+import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
 import android.view.View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
 import android.view.WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS
-
-
+import androidx.fragment.app.FragmentTransaction.TRANSIT_FRAGMENT_FADE
+import androidx.fragment.app.FragmentTransaction.TRANSIT_FRAGMENT_OPEN
+import com.nibmz7gmail.sgprayertimemusollah.ui.calendar.CalendarFragment
+import com.nibmz7gmail.sgprayertimemusollah.ui.nearby.NearbyFragment
+import com.nibmz7gmail.sgprayertimemusollah.ui.qibla.QiblaFragment
+import timber.log.Timber
 
 
 class MainActivity : DaggerAppCompatActivity() {
@@ -40,10 +45,15 @@ class MainActivity : DaggerAppCompatActivity() {
 
         setSupportActionBar(bar)
 
+        fab_qibla.setOnClickListener {
+            addFragment(QiblaFragment(), TRANSIT_FRAGMENT_OPEN)
+        }
+
         if (savedInstanceState == null) {
-            replaceFragment(PrayerTimesFragment(), FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+            replaceFragment(PrayerTimesFragment(), TRANSIT_FRAGMENT_FADE)
         } else {
             // Find the current fragment
+            Timber.i("Activity recreated and fragment found!")
             currentFragment =
                     supportFragmentManager.findFragmentById(FRAGMENT_ID) as? MainNavigationFragment
                     ?: throw IllegalStateException("Activity recreated, but no fragment found!")
@@ -68,11 +78,25 @@ class MainActivity : DaggerAppCompatActivity() {
         }
     }
 
-    fun <F> addFragment(fragment: F, transition: Int) where F : Fragment, F : MainNavigationFragment {
+    private fun <F> addFragment(fragment: F, transition: Int) where F : Fragment, F : MainNavigationFragment {
+        if(currentFragment.javaClass == fragment.javaClass) {
+            Timber.i("Adding same fragment again. WHAT FOR?")
+            return
+        }
+
         supportFragmentManager.inTransaction {
             setTransition( transition )
             supportFragmentManager.findFragmentByTag(FIRST_FRAGMENT)?.let {
-                hide(it)
+                if(!currentFragment.onBackPressed()) {
+                    Timber.e("Hiding First fragment even if it's hidden")
+                    hide(it)
+                }
+            }
+            if(currentFragment.onBackPressed()) {
+                supportFragmentManager.findFragmentByTag(SECOND_FRAGMENT)?.let {
+                    Timber.i("Adding new second fragment so removing current second fragment")
+                    remove(it)
+                }
             }
             currentFragment = fragment
             add(FRAGMENT_ID, fragment, SECOND_FRAGMENT)
@@ -100,6 +124,16 @@ class MainActivity : DaggerAppCompatActivity() {
 
             android.R.id.home -> {
 
+            }
+
+            R.id.nearby -> {
+                addFragment(NearbyFragment(), TRANSIT_FRAGMENT_OPEN)
+                return true
+            }
+
+            R.id.calendar -> {
+                addFragment(CalendarFragment(), TRANSIT_FRAGMENT_OPEN)
+                return true
             }
         }
         return super.onOptionsItemSelected(item)

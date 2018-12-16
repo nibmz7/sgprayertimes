@@ -32,13 +32,12 @@
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/fab"
+        android:id="@+id/fab_qibla"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         style="@style/Widget.PrayerTimes.FABlikeButton"
         app:icon="@drawable/ic_compass"
         android:text="Qibla Finder"
-        app:cornerRadius="32dp"
         app:layout_constraintTop_toBottomOf="@id/fragment_container"
         app:layout_constraintBottom_toBottomOf="@id/fragment_container"
         app:layout_constraintLeft_toLeftOf="parent"
