@@ -13,5 +13,9 @@
     <color name="text_grey">#8D9599</color>
     <color name="black_20">#33000000</color>
 
+    <color name="highlight_light">#33ffffff</color> <!-- 20% white -->
+
+    <color name="inactive">#6ab04c</color>
+    <color name="active">#eb4d4b</color>
 
 </resources>

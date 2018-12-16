@@ -42,10 +42,6 @@ class MainActivity : DaggerAppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val decorView = window.decorView
-            decorView.systemUiVisibility = FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS or SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
-        }
 
         setSupportActionBar(bar)
 

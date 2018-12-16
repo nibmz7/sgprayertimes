@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!--Enter animation-->
+<!--https://proandroiddev.com/enter-animation-using-recyclerview-and-layoutanimation-part-1-list-75a874a5d213-->
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
@@ -9,9 +13,9 @@
               android:paddingBottom="18dp"
               android:paddingTop="18dp"
               android:weightSum="1.1"
-              android:id="@+id/root"
+              android:id="@+id/list"
+              android:visibility="gone"
 >
-    <!--https://proandroiddev.com/enter-animation-using-recyclerview-and-layoutanimation-part-1-list-75a874a5d213-->
 
     <include
         layout="@layout/item_prayer_times"/>
