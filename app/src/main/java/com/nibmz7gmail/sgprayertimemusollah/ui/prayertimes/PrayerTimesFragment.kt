@@ -1,9 +1,13 @@
 package com.nibmz7gmail.sgprayertimemusollah.ui.prayertimes
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -45,7 +49,8 @@ class PrayerTimesFragment : DaggerFragment(), MainNavigationFragment {
     private fun handleUpdates(result: Result<CalendarData>) {
         when(result) {
             is Result.Success -> {
-                textView.text = result.data.toString()
+                Timber.i(result.data.toString())
+                distributeData(result.data)
             }
             is Result.Error -> {
                 Timber.i("Error ${result.errorType}")
@@ -57,7 +62,29 @@ class PrayerTimesFragment : DaggerFragment(), MainNavigationFragment {
         }
     }
 
+    private fun distributeData(calendarData: CalendarData) {
+        val viewGroup = root as ViewGroup
+        for (i in 0 until viewGroup.childCount) {
+            val cardView = viewGroup.getChildAt(i) as CardView
+            cardView.findViewById<TextView>(R.id.text_prayer_type)?.apply {
+                text = TIME_OF_DAY[i]
+            }
+            cardView.findViewById<TextView>(R.id.text_prayer_time)?.apply {
+                text = calendarData.prayerTimes[i]
+            }
+            cardView.findViewById<ImageView>(R.id.img_prayer_time)?.apply {
+                setImageResource(TIME_OF_DAY_IMG[i])
+            }
+        }
+
+    }
+
     override fun onBackPressed(): Boolean {
         return false
+    }
+
+    companion object {
+        val TIME_OF_DAY = arrayOf("Fajr", "Zuhr", "Asr", "Maghrib", "Isya'")
+        val TIME_OF_DAY_IMG = arrayOf(R.drawable.prayer1, R.drawable.prayer2, R.drawable.prayer3, R.drawable.prayer4, R.drawable.prayer5)
     }
 }

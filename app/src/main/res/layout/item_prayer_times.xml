@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        style="@style/Widget.MaterialComponents.CardView"
+        android:layout_height="0dp"
+        android:layout_width="match_parent"
+        app:cardCornerRadius="0dp"
+        app:cardUseCompatPadding="false"
+        android:layout_weight="0.2"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
+>
+
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginRight="30dp"
+            android:layout_marginLeft="30dp"
+    >
+
+
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_above="@id/text_time_left"
+                android:orientation="vertical"
+                android:gravity="center_vertical"
+        >
+
+            <TextView
+                    android:id="@+id/text_prayer_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="21sp"
+                    android:textColor="@color/text_grey"
+                    android:text="Fajr"
+            />
+
+            <TextView
+                    android:id="@+id/text_prayer_time"
+                    android:text="5 36"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black_20"
+                    android:textSize="19sp"
+                    android:includeFontPadding="false"
+                    android:lineSpacingExtra="0dp"
+                    android:padding="0dp"
+            />
+        </LinearLayout>
+        <ImageView
+                android:id="@+id/img_prayer_time"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:padding="0dp"
+                android:adjustViewBounds="true"
+                android:layout_above="@id/text_time_left"
+                android:src="@drawable/prayer1" />
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_alignParentBottom="true"
+                android:id="@+id/text_time_left"
+                android:text="Time until next prayer: 1 hour 3 minutes"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:visibility="gone"
+                android:textSize="13sp"
+                android:textColor="@color/text_grey"
+        />
+    </RelativeLayout>
+
+</com.google.android.material.card.MaterialCardView>

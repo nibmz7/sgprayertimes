@@ -33,7 +33,7 @@ class RemoteCalendarDataSource @Inject constructor(
 
         val parsedData = try {
             jsonData.toListItems<CalendarData>()
-        } catch (e: RuntimeException) {
+        } catch (e: Exception) {
             Timber.e(e, "Error parsing cached data")
             null
         }

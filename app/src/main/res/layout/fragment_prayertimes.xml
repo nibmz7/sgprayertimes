@@ -1,15 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent"
+              android:clipToPadding="false"
+              android:gravity="center"
+              android:layoutAnimation="@anim/slide_animation"
+              android:orientation="vertical"
+              android:paddingBottom="18dp"
+              android:paddingTop="18dp"
+              android:weightSum="1.1"
+              android:id="@+id/root"
+>
+    <!--https://proandroiddev.com/enter-animation-using-recyclerview-and-layoutanimation-part-1-list-75a874a5d213-->
 
+    <include
+        layout="@layout/item_prayer_times"/>
+    <include
+            layout="@layout/item_prayer_times"/>
+    <include
+            layout="@layout/item_prayer_times"/>
+    <include
+            layout="@layout/item_prayer_times"/>
+    <include
+            layout="@layout/item_prayer_times"/>
 
-    <TextView
-            android:text="TextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-            android:textColor="@android:color/black"
-            android:id="@+id/textView"/>
 </LinearLayout>

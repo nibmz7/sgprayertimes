@@ -22,7 +22,11 @@ import androidx.fragment.app.FragmentTransaction.TRANSIT_FRAGMENT_OPEN
 import com.nibmz7gmail.sgprayertimemusollah.ui.calendar.CalendarFragment
 import com.nibmz7gmail.sgprayertimemusollah.ui.nearby.NearbyFragment
 import com.nibmz7gmail.sgprayertimemusollah.ui.qibla.QiblaFragment
+import com.nibmz7gmail.sgprayertimemusollah.ui.widget.MenuFragment
 import timber.log.Timber
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+
+
 
 
 class MainActivity : DaggerAppCompatActivity() {
@@ -78,8 +82,8 @@ class MainActivity : DaggerAppCompatActivity() {
         }
     }
 
-    private fun <F> addFragment(fragment: F, transition: Int) where F : Fragment, F : MainNavigationFragment {
-        if(currentFragment.javaClass == fragment.javaClass) {
+    private fun <F> addFragment(newFragment: F, transition: Int) where F : Fragment, F : MainNavigationFragment {
+        if(currentFragment.javaClass == newFragment.javaClass) {
             Timber.i("Adding same fragment again. WHAT FOR?")
             return
         }
@@ -88,7 +92,7 @@ class MainActivity : DaggerAppCompatActivity() {
             setTransition( transition )
             supportFragmentManager.findFragmentByTag(FIRST_FRAGMENT)?.let {
                 if(!currentFragment.onBackPressed()) {
-                    Timber.e("Hiding First fragment even if it's hidden")
+                    Timber.i("Hiding First fragment even if it's hidden")
                     hide(it)
                 }
             }
@@ -98,8 +102,8 @@ class MainActivity : DaggerAppCompatActivity() {
                     remove(it)
                 }
             }
-            currentFragment = fragment
-            add(FRAGMENT_ID, fragment, SECOND_FRAGMENT)
+            currentFragment = newFragment
+            add(FRAGMENT_ID, newFragment, SECOND_FRAGMENT)
         }
     }
 
@@ -123,7 +127,9 @@ class MainActivity : DaggerAppCompatActivity() {
         when(item.itemId){
 
             android.R.id.home -> {
-
+                val bottomMenuFragment = MenuFragment()
+                bottomMenuFragment.show(supportFragmentManager, bottomMenuFragment.tag)
+                return true
             }
 
             R.id.nearby -> {

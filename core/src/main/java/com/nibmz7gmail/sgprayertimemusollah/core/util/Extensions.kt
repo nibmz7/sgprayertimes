@@ -63,6 +63,18 @@ inline fun <reified T> String.toListItems(): List<T>? {
     return dataAdapter.fromJson(this)
 }
 
+inline fun <reified T> List<T>.toJsonString(): String {
+
+    val moshi = Moshi.Builder()
+        .add(KotlinJsonAdapterFactory())
+        .build()
+
+    val type = Types.newParameterizedType(List::class.java, T::class.java)
+    val dataAdapter = moshi.adapter<List<T>>(type)
+
+    return dataAdapter.toJson(this)
+}
+
 inline fun FragmentManager.inTransaction(func: FragmentTransaction.() -> FragmentTransaction?) {
     beginTransaction().func()?.commit()
 }

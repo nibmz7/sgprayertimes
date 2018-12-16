@@ -1,11 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:title="Privacy policy"
-        android:id="@+id/menu_privacy"
+    <item android:title="@string/rate_app"
+        android:id="@+id/rate"
+          android:icon="@drawable/ic_thumb_up"
         />
 
-    <item android:title="Terms of Service"
-        android:id="@+id/menu_service"
-        />
+    <item android:title="@string/share_app"
+          android:id="@+id/share"
+          android:icon="@drawable/ic_share"
+          />
+    <item android:title="@string/view_github"
+          android:id="@+id/githublink"
+          android:icon="@drawable/ic_github"
+          />
+
+    <item android:title="@string/credits"
+          android:id="@+id/credits"
+          android:icon="@drawable/ic_credits"
+          />
 </menu>

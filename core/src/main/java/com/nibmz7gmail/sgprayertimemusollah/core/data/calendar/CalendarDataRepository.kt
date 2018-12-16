@@ -33,6 +33,7 @@ class CalendarDataRepository @Inject constructor(
             throw e
         } ?: return false
 
+        calendarDao.deleteAll()
         calendarDao.insertAll(*calendarData.toTypedArray())
 
         return true
