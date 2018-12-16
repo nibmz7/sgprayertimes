@@ -8,12 +8,16 @@ import androidx.lifecycle.LiveData
 import com.nibmz7gmail.sgprayertimemusollah.core.result.Result
 import timber.log.Timber
 import javax.inject.Inject
+import kotlin.math.atan2
+import kotlin.math.cos
+import kotlin.math.sin
 
 enum class QiblaError{
     ACCURACY,
     NULL
 }
 
+//https://stackoverflow.com/questions/4308262/calculate-compass-bearing-heading-to-location-in-android/44249170
 class QiblaCompass @Inject constructor(
     context: Context
 ): SensorEventListener, LiveData<Result<FloatArray>>() {
@@ -47,8 +51,9 @@ class QiblaCompass @Inject constructor(
             System.currentTimeMillis())
 
         var head = Math.round(someValue).toFloat()
-        var bearTo = userLoc!!.bearingTo(target)
+        var bearTo = calculateBearingAngle(userLoc!!, target)
         head -= geoField.declination
+
         if (bearTo < 0) {
             bearTo += 360
         }
@@ -77,6 +82,18 @@ class QiblaCompass @Inject constructor(
         super.onInactive()
         Timber.i("Compass Paused")
         sensorManager.unregisterListener(this)
+    }
+
+    private fun calculateBearingAngle(from: Location, to: Location): Float {
+
+        val phi1 = Math.toRadians(from.latitude)
+        val phi2 = Math.toRadians(to.latitude)
+        val deltaLambda = Math.toRadians(to.longitude - from.longitude)
+        val theta = atan2(
+            sin(deltaLambda) * cos(phi2),
+            cos(phi1) * sin(phi2) - sin(phi1) * cos(phi2) * cos(deltaLambda)
+        )
+        return Math.toDegrees(theta).toFloat()
     }
 
     init {

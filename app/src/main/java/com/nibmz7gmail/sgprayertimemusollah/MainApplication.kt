@@ -1,6 +1,5 @@
 package com.nibmz7gmail.sgprayertimemusollah
 
-import com.nibmz7gmail.sgprayertimemusollah.di.AppModule
 import com.nibmz7gmail.sgprayertimemusollah.di.DaggerAppComponent
 import dagger.android.AndroidInjector
 import dagger.android.support.DaggerApplication

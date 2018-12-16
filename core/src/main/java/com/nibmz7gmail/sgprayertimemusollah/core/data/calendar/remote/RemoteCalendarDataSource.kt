@@ -5,7 +5,6 @@ import com.nibmz7gmail.sgprayertimemusollah.core.model.CalendarData
 import com.nibmz7gmail.sgprayertimemusollah.core.util.isConnectedToInternet
 import com.nibmz7gmail.sgprayertimemusollah.core.util.toListItems
 import timber.log.Timber
-import java.io.IOException
 import javax.inject.Inject
 
 interface RemoteDataSource {
@@ -24,7 +23,7 @@ class RemoteCalendarDataSource @Inject constructor(
 
         Timber.i("Trying to download data from network")
         val responseSource = try {
-            CalendarDataDownloader(context).fetch()
+            CalendarDataDownloader().fetch()
         } catch (e: Exception) {
             Timber.e(e)
             null

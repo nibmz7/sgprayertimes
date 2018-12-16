@@ -13,6 +13,7 @@ import com.nibmz7gmail.sgprayertimemusollah.R
 import com.nibmz7gmail.sgprayertimemusollah.core.model.CalendarData
 import com.nibmz7gmail.sgprayertimemusollah.core.result.Result
 import com.nibmz7gmail.sgprayertimemusollah.core.util.activityViewModelProvider
+import com.nibmz7gmail.sgprayertimemusollah.ui.calendar.CalendarFragment
 import com.nibmz7gmail.sgprayertimemusollah.ui.nearby.NearbyFragment
 import com.nibmz7gmail.sgprayertimemusollah.ui.qibla.QiblaFragment
 import dagger.android.support.DaggerFragment
@@ -45,6 +46,10 @@ class PrayerTimesFragment : DaggerFragment(), MainNavigationFragment {
 
         button2.setOnClickListener {
             (requireActivity() as MainActivity).addFragment(QiblaFragment(), FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+        }
+
+        button3.setOnClickListener {
+            (requireActivity() as MainActivity).addFragment(CalendarFragment(), FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
         }
     }
 

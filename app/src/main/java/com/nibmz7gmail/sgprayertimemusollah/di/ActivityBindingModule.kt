@@ -17,6 +17,7 @@ package com.nibmz7gmail.sgprayertimemusollah.di
 
 import com.nibmz7gmail.sgprayertimemusollah.MainActivity
 import com.nibmz7gmail.sgprayertimemusollah.core.di.ActivityScoped
+import com.nibmz7gmail.sgprayertimemusollah.ui.calendar.CalendarModule
 import com.nibmz7gmail.sgprayertimemusollah.ui.nearby.NearbyModule
 import com.nibmz7gmail.sgprayertimemusollah.ui.prayertimes.PrayerTimesModule
 import com.nibmz7gmail.sgprayertimemusollah.ui.qibla.QiblaModule
@@ -40,7 +41,8 @@ abstract class ActivityBindingModule {
         modules = [
             PrayerTimesModule::class,
             NearbyModule::class,
-            QiblaModule::class
+            QiblaModule::class,
+            CalendarModule::class
         ]
     )
     internal abstract fun MainActivity(): MainActivity

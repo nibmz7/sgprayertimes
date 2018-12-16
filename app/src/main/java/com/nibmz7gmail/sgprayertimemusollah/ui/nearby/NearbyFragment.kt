@@ -1,6 +1,5 @@
 package com.nibmz7gmail.sgprayertimemusollah.ui.nearby
 
-import android.Manifest.permission.ACCESS_COARSE_LOCATION
 import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -17,14 +16,12 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.snackbar.Snackbar.LENGTH_INDEFINITE
-import com.google.android.material.snackbar.Snackbar.LENGTH_SHORT
 import com.nibmz7gmail.sgprayertimemusollah.BuildConfig.APPLICATION_ID
 import com.nibmz7gmail.sgprayertimemusollah.MainNavigationFragment
 import com.nibmz7gmail.sgprayertimemusollah.R
 import com.nibmz7gmail.sgprayertimemusollah.core.result.Result
 import com.nibmz7gmail.sgprayertimemusollah.core.util.activityViewModelProvider
 import com.nibmz7gmail.sgprayertimemusollah.core.util.showToast
-import com.nibmz7gmail.sgprayertimemusollah.ui.qibla.QiblaViewModel
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_nearby.*
 import timber.log.Timber

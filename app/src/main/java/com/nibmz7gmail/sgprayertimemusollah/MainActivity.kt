@@ -1,21 +1,23 @@
 package com.nibmz7gmail.sgprayertimemusollah
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
+import android.view.Menu
+import android.view.MenuItem
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
-import com.nibmz7gmail.sgprayertimemusollah.core.model.CalendarData
-import com.nibmz7gmail.sgprayertimemusollah.core.result.Result
 import com.nibmz7gmail.sgprayertimemusollah.core.util.inTransaction
 import com.nibmz7gmail.sgprayertimemusollah.ui.prayertimes.PrayerTimesFragment
-import com.nibmz7gmail.sgprayertimemusollah.ui.prayertimes.PrayerTimesViewModel
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
-import timber.log.Timber
-import javax.inject.Inject
+import android.view.View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
+import android.view.WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS
+import android.os.Build
+import android.view.View
+import androidx.core.content.ContextCompat
+import android.view.View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
+import android.view.WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS
+
+
 
 
 class MainActivity : DaggerAppCompatActivity() {
@@ -31,7 +33,12 @@ class MainActivity : DaggerAppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val decorView = window.decorView
+            decorView.systemUiVisibility = FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS or SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
+        }
 
+        setSupportActionBar(bar)
 
         if (savedInstanceState == null) {
             replaceFragment(PrayerTimesFragment(), FragmentTransaction.TRANSIT_FRAGMENT_FADE)
@@ -81,6 +88,21 @@ class MainActivity : DaggerAppCompatActivity() {
                 show(it)
             }
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+
+            android.R.id.home -> {
+
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
 }

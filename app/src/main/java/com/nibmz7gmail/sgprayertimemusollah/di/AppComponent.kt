@@ -16,7 +16,6 @@
 
 package com.nibmz7gmail.sgprayertimemusollah.di
 
-import android.app.Application
 import com.nibmz7gmail.sgprayertimemusollah.MainApplication
 import com.nibmz7gmail.sgprayertimemusollah.core.di.CoreModule
 import com.nibmz7gmail.sgprayertimemusollah.core.di.ViewModelModule

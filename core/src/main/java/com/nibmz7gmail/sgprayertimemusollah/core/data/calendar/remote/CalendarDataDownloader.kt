@@ -1,6 +1,5 @@
 package com.nibmz7gmail.sgprayertimemusollah.core.data.calendar.remote
 
-import android.content.Context
 import androidx.annotation.WorkerThread
 import com.nibmz7gmail.sgprayertimemusollah.core.BuildConfig
 import okhttp3.*
@@ -8,9 +7,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import timber.log.Timber
 import java.io.IOException
 
-class CalendarDataDownloader(
-    private val context: Context
-){
+class CalendarDataDownloader {
     private val client: OkHttpClient by lazy {
         val logInterceptor = HttpLoggingInterceptor()
         logInterceptor.level = HttpLoggingInterceptor.Level.BASIC

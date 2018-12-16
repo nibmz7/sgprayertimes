@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import com.nibmz7gmail.sgprayertimemusollah.core.AsyncScheduler
 import com.nibmz7gmail.sgprayertimemusollah.core.data.CACHED_LOCATION
 import com.nibmz7gmail.sgprayertimemusollah.core.model.Mosque
-import com.nibmz7gmail.sgprayertimemusollah.core.result.Result
 import timber.log.Timber
 import java.util.*
 import javax.inject.Inject
