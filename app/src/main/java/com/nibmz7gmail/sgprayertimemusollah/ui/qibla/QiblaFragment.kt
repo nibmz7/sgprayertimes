@@ -15,6 +15,7 @@ import com.nibmz7gmail.sgprayertimemusollah.R
 import com.nibmz7gmail.sgprayertimemusollah.core.model.CalendarData
 import com.nibmz7gmail.sgprayertimemusollah.core.result.Result
 import com.nibmz7gmail.sgprayertimemusollah.core.util.activityViewModelProvider
+import com.nibmz7gmail.sgprayertimemusollah.ui.PermissionFragment
 import com.nibmz7gmail.sgprayertimemusollah.ui.nearby.NearbyFragment
 import com.nibmz7gmail.sgprayertimemusollah.ui.prayertimes.PrayerTimesViewModel
 import dagger.android.support.DaggerFragment
@@ -23,7 +24,7 @@ import kotlinx.android.synthetic.main.fragment_qibla.*
 import timber.log.Timber
 import javax.inject.Inject
 
-class QiblaFragment : DaggerFragment(), MainNavigationFragment {
+class QiblaFragment : PermissionFragment(), MainNavigationFragment {
 
     @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var viewModel: QiblaViewModel
@@ -36,11 +37,15 @@ class QiblaFragment : DaggerFragment(), MainNavigationFragment {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        showLoadingWithText("Loading...\nMake sure location is turned on")
+
         viewModel = activityViewModelProvider(viewModelFactory)
 
         viewModel.calendarDataObservable.observe(this, Observer {
 
             if(it is Result.Success){
+
+                hideLoadingScreen()
 
                 val rotateAnimation = RotateAnimation(
                     it.data[0],
@@ -54,6 +59,22 @@ class QiblaFragment : DaggerFragment(), MainNavigationFragment {
             }
         })
 
+        retry()
+
+    }
+
+    override fun permissionGranted() {
+        retry()
+    }
+
+    override fun retry() {
+        if (!checkPermissions()) {
+            showError("Location permission has not been granted")
+            startLocationPermissionRequest()
+        } else {
+            showLoadingWithText("Loading...Make sure location is turned on")
+            viewModel.startLocationUpdates()
+        }
     }
 
     override fun onBackPressed(): Boolean {

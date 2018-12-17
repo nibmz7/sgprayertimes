@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 class NearbyViewModel @Inject constructor(
 	private val nearbyMosqueLocator: NearbyMosqueLocator,
-	locationLiveData: LocationLiveData
+	private val locationLiveData: LocationLiveData
 ) : ViewModel() {
 
 	private val _nearbyMosqueObservable = MediatorLiveData<Result<List<Mosque>>>()
@@ -32,6 +32,10 @@ class NearbyViewModel @Inject constructor(
 		_nearbyMosqueObservable.addSource(nearbyMosqueLocator.nearbyMosques) {
 			_nearbyMosqueObservable.value = Result.Success(it)
 		}
+	}
+
+	fun startLocationUpdates() {
+		locationLiveData.startLocationUpdates()
 	}
 
 

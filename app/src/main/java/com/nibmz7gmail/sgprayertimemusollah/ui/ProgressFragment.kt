@@ -35,6 +35,14 @@ abstract class ProgressFragment: DaggerFragment(){
         infoScreen(gone)
     }
 
+    fun showLoadingWithText(msg: String) {
+        info_message.text = msg
+        info_message.visibility = visible
+        loadingBar.visibility = visible
+        retryButton.visibility = gone
+        progress_screen.visibility = visible
+    }
+
     abstract fun retry()
 
     private fun infoScreen(visibility: Int) {

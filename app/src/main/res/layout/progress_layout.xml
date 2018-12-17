@@ -22,6 +22,7 @@
               android:padding="8dp"
               android:textAppearance="@style/TextAppearance.PrayerTimes.Body"
               android:id="@+id/info_message"
+              android:layout_below="@+id/loadingBar"
               android:visibility="gone"
     />
 

@@ -11,7 +11,7 @@ import javax.inject.Inject
 
 class QiblaViewModel @Inject constructor(
 	private val qiblaCompass: QiblaCompass,
-    locationLiveData: LocationLiveData
+    private val locationLiveData: LocationLiveData
 ) : ViewModel() {
 
     private val _calendarDataObservable = MediatorLiveData<Result<FloatArray>>()
@@ -30,6 +30,10 @@ class QiblaViewModel @Inject constructor(
         _calendarDataObservable.addSource(qiblaCompass) {
             _calendarDataObservable.value = it
         }
+    }
+
+    fun startLocationUpdates() {
+        locationLiveData.startLocationUpdates()
     }
 
 }
