@@ -20,13 +20,16 @@ object PrayerTimesUtils {
         "Isya' prayer"
     )
 
+    private val islamicMonths = arrayOf("Muharram", "Safar", "Rabiul-Awwal", "Rabi-uthani", "Jumadi-ul-Awwal", "Jumadi-uthani", "Rajab", "Sha’ban", "Ramadan", "Shawwal", "Zhul-Q’ada", "Zhul-Hijja")
+
+
 
 
     fun CalendarData.getActivePrayerTime(): Pair<Int, String> {
-        var activeTime = 0
+        var activeTime = 1
         var infoText = "No info text"
         try {
-            val sdf = SimpleDateFormat(DATE_PATTERN, Locale.US)
+            val sdf = SimpleDateFormat(DATE_PATTERN, Locale.getDefault())
             val currentTime = sdf.parse(sdf.format(Calendar.getInstance().time))
             val prayerTimes = arrayOf(this.prayerTimes[0], this.prayerTimes[5], this.prayerTimes[1], this.prayerTimes[2], this.prayerTimes[3], this.prayerTimes[4])
 
@@ -42,10 +45,10 @@ object PrayerTimesUtils {
                         break
                     }
                     activeTime += 1
+                    infoText = "Time for Fajr prayer tomorrow: ${prayerTimes[0]}± am"
                 }
             } else {
-                infoText = if(activeTime == 7) "Time for Fajr prayer tomorrow: ${prayerTimes[0]}± am"
-                else fajrTime.timeDifference(activeTime, currentTime.time)
+                infoText = fajrTime.timeDifference(activeTime, currentTime.time)
             }
         } catch (e: Exception){
             Timber.e(e, "Error finding active prayer time")
@@ -69,6 +72,15 @@ object PrayerTimesUtils {
         return "Time until $type: $hrs hours and $mins mins"
     }
 
+    fun CalendarData.toHijriDate(): String {
+        return hijriDate.dayH.toString() + " " + islamicMonths[hijriDate.monthH] + " " + hijriDate.yearH + "H"
+    }
+
+    fun getCurrentDate(): String {
+        val calendar = Calendar.getInstance()
+        val mdformat = SimpleDateFormat("EEEE, dd MMM yyyy", Locale.getDefault())
+        return mdformat.format(calendar.time)
+    }
 
     private fun SimpleDateFormat.parsePrayerTime(prayerTime: String, idx: Int): Date {
         val suffix = if(idx < 2) "am" else "pm"

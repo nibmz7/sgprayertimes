@@ -1,31 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
 
-<!--Enter animation-->
-<!--https://proandroiddev.com/enter-animation-using-recyclerview-and-layoutanimation-part-1-list-75a874a5d213-->
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:clipToPadding="false"
-              android:gravity="center"
-              android:layoutAnimation="@anim/slide_animation"
-              android:orientation="vertical"
-              android:paddingBottom="18dp"
-              android:paddingTop="18dp"
-              android:weightSum="1.1"
-              android:id="@+id/list"
-              android:visibility="gone"
->
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:fitsSystemWindows="true"
+                  android:orientation="vertical"
+                  android:gravity="center"
+                  android:layout_marginBottom="?android:attr/actionBarSize"
+                  app:layout_constraintTop_toTopOf="parent"
+                  android:id="@+id/topBar"
+                  android:paddingTop="12dp"
+    >
 
-    <include
-        layout="@layout/item_prayer_times"/>
-    <include
-            layout="@layout/item_prayer_times"/>
-    <include
-            layout="@layout/item_prayer_times"/>
-    <include
-            layout="@layout/item_prayer_times"/>
-    <include
-            layout="@layout/item_prayer_times"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/qs_bold"
+                android:text="-------------------"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                android:id="@+id/main_toolbar_title"
+        />
 
-</LinearLayout>
+        <TextView
+                android:id="@+id/sub_toolbar_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/qs_bold"
+                android:text="---------------"
+                android:textSize="13sp"
+                android:textStyle="bold"
+        />
+    </LinearLayout>
+
+    <!--Enter animation-->
+    <!--https://proandroiddev.com/enter-animation-using-recyclerview-and-layoutanimation-part-1-list-75a874a5d213-->
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:layout_width="match_parent"
+                  android:layout_height="0dp"
+                  android:clipToPadding="false"
+                  android:gravity="center"
+                  android:layoutAnimation="@anim/slide_animation"
+                  android:orientation="vertical"
+                  android:paddingBottom="18dp"
+                  android:paddingTop="12dp"
+                  android:weightSum="1.1"
+                  android:id="@+id/list"
+                  app:layout_constraintTop_toBottomOf="@id/topBar"
+                  app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginBottom="21dp"
+    >
+
+                    <include
+                            layout="@layout/item_prayer_times"/>
+                    <include
+                            layout="@layout/item_prayer_times"/>
+                    <include
+                            layout="@layout/item_prayer_times"/>
+                    <include
+                            layout="@layout/item_prayer_times"/>
+                    <include
+                            layout="@layout/item_prayer_times"/>
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

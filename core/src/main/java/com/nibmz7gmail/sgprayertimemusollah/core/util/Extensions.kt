@@ -2,6 +2,7 @@ package com.nibmz7gmail.sgprayertimemusollah.core.util
 
 import android.content.Context
 import android.net.ConnectivityManager
+import android.util.DisplayMetrics
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -77,4 +78,24 @@ inline fun <reified T> List<T>.toJsonString(): String {
 
 inline fun FragmentManager.inTransaction(func: FragmentTransaction.() -> FragmentTransaction?) {
     beginTransaction().func()?.commit()
+}
+
+fun Context.pixelsToSp(px: Float): Float {
+    val displayMetrics = resources.displayMetrics
+    return px / displayMetrics.scaledDensity
+}
+
+fun Context.pixelsToDp(px: Float): Float {
+    val displayMetrics = resources.displayMetrics
+    return px / (displayMetrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT)
+}
+
+fun Context.dpToPixels(dp: Float): Float {
+    val displayMetrics = resources.displayMetrics
+    return dp * (displayMetrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT)
+}
+
+fun Context.spToPixels(dp: Float): Float {
+    val displayMetrics = resources.displayMetrics
+    return dp * displayMetrics.scaledDensity
 }
