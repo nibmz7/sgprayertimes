@@ -22,7 +22,7 @@ object PrayerTimesUtils {
 
     private val islamicMonths = arrayOf("Muharram", "Safar", "Rabiul-Awwal", "Rabi-uthani", "Jumadi-ul-Awwal", "Jumadi-uthani", "Rajab", "Sha’ban", "Ramadan", "Shawwal", "Zhul-Q’ada", "Zhul-Hijja")
 
-
+    fun getTodaysDate(): String = Calendar.getInstance().time.toString("dd/M/yyyy")
 
 
     fun CalendarData.getActivePrayerTime(): Pair<Int, String> {

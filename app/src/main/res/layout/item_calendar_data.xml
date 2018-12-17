@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="horizontal"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:id="@+id/root"
+              android:background="@color/white"
+              android:elevation="8dp"
+>
+
+    <TextView
+            android:text="18 Sha'ban 1439H"
+            android:id="@+id/hijriDate"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:ellipsize="marquee"
+            android:gravity="center"
+            android:padding="5dp"
+            android:textAppearance="@style/TextAppearance.PrayerTimes.Content"
+    />
+
+    <TextView
+            android:text="18/12/2018"
+            android:id="@+id/date"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="5dp"
+            android:textAppearance="@style/TextAppearance.PrayerTimes.Content"
+    />
+
+    <TextView
+            android:text="Fri"
+            android:id="@+id/day"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="5dp"
+            android:textAppearance="@style/TextAppearance.PrayerTimes.Content"
+    />
+
+    <TextView
+            android:text="Beginning of Fasting"
+            android:id="@+id/event"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:ellipsize="marquee"
+            android:gravity="center"
+            android:padding="5dp"
+            android:textAppearance="@style/TextAppearance.PrayerTimes.Content"
+    />
+
+    <TextView
+            android:text=""
+            android:id="@+id/timeTxt1"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="5dp"
+            android:textAppearance="@style/TextAppearance.PrayerTimes.Content"
+    />
+
+    <TextView
+            android:text=""
+            android:id="@+id/timeTxt2"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="5dp"
+            android:textAppearance="@style/TextAppearance.PrayerTimes.Content"
+    />
+
+    <TextView
+            android:text=""
+            android:id="@+id/timeTxt3"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="5dp"
+            android:textAppearance="@style/TextAppearance.PrayerTimes.Content"
+    />
+
+    <TextView
+            android:text=""
+            android:id="@+id/timeTxt4"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="5dp"
+            android:textAppearance="@style/TextAppearance.PrayerTimes.Content"
+    />
+
+    <TextView
+            android:text=""
+            android:id="@+id/timeTxt5"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="5dp"
+            android:textAppearance="@style/TextAppearance.PrayerTimes.Content"
+    />
+
+    <TextView
+            android:text=""
+            android:id="@+id/timeTxt6"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="5dp"
+            android:textAppearance="@style/TextAppearance.PrayerTimes.Content"
+    />
+
+</LinearLayout>

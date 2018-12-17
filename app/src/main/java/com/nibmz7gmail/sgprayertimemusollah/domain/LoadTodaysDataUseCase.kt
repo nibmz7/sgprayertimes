@@ -9,6 +9,7 @@ import javax.inject.Inject
 import androidx.lifecycle.MutableLiveData
 import com.nibmz7gmail.sgprayertimemusollah.core.AsyncScheduler
 import com.nibmz7gmail.sgprayertimemusollah.core.result.Result
+import com.nibmz7gmail.sgprayertimemusollah.core.util.PrayerTimesUtils.getTodaysDate
 import com.nibmz7gmail.sgprayertimemusollah.core.util.toString
 import timber.log.Timber
 import java.util.*
@@ -45,7 +46,7 @@ class LoadTodaysDataUseCase @Inject constructor(
 
     private fun cacheIsUptoDate(isWidget: Boolean): Boolean {
         synchronized(loadCacheLock) {
-            val currentDate = currentDate()
+            val currentDate = getTodaysDate()
 
             todaysDataCache?.let {
                 if(it is Result.Success) {
@@ -62,7 +63,7 @@ class LoadTodaysDataUseCase @Inject constructor(
 
     private fun fetchNewData(isWidget: Boolean) {
         synchronized(loadCacheLock) {
-            val currentDate = currentDate()
+            val currentDate = getTodaysDate()
 
             todaysDataCache?.let {
                 if (it is Result.Success && it.data.date == currentDate) {
@@ -126,6 +127,5 @@ class LoadTodaysDataUseCase @Inject constructor(
         //context.sendBroadcast
     }
 
-    private fun currentDate(): String = Calendar.getInstance().time.toString("dd/M/yyyy")
 
 }

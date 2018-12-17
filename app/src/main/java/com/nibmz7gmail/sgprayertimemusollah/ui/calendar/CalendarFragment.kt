@@ -6,30 +6,45 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.nibmz7gmail.sgprayertimemusollah.MainNavigationFragment
 import com.nibmz7gmail.sgprayertimemusollah.R
 import com.nibmz7gmail.sgprayertimemusollah.core.util.activityViewModelProvider
+import com.nibmz7gmail.sgprayertimemusollah.core.util.showToast
 import dagger.android.support.DaggerFragment
-import kotlinx.android.synthetic.main.fragment_nearby.*
+import kotlinx.android.synthetic.main.fragment_calendar.*
 import javax.inject.Inject
 
 class CalendarFragment : DaggerFragment(), MainNavigationFragment {
 
+    private val adapter = CalendarAdapter()
     @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var viewModel: CalendarViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_nearby, container, false)
+        return inflater.inflate(R.layout.fragment_calendar, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        recyclerview.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
+        recyclerview.adapter = adapter
+
         viewModel = activityViewModelProvider(viewModelFactory)
 
         viewModel.calendarDataObservable.observe(this, Observer {
-            textView.text = it.toString()
+            loadingBar.visibility = View.GONE
+            adapter.submitList(it)
+        })
+
+        recyclerview.addOnScrollListener( object : RecyclerView.OnScrollListener(){
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                header.isSelected = recyclerView.canScrollVertically(-1)
+            }
         })
 
     }
