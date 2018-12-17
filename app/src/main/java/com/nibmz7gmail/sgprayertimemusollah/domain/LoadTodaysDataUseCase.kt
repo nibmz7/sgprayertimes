@@ -49,11 +49,11 @@ class LoadTodaysDataUseCase @Inject constructor(
 
             todaysDataCache?.let {
                 if(it is Result.Success) {
-                    if(it.data.date != currentDate) return@let
+                    if(it.data.date != currentDate) return false
                     notifyObserver(isWidget)
+                    Timber.i("Cache exists")
+                    return true
                 }
-                Timber.i("Cache exists")
-                return true
             }
             Timber.i("Cache is faulty or not up-to-date")
             return false

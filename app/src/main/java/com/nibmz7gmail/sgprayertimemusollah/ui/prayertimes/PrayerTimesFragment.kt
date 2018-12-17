@@ -25,9 +25,11 @@ import com.nibmz7gmail.sgprayertimemusollah.R
 import com.nibmz7gmail.sgprayertimemusollah.core.util.*
 import com.nibmz7gmail.sgprayertimemusollah.core.util.PrayerTimesUtils.getCurrentDate
 import com.nibmz7gmail.sgprayertimemusollah.core.util.PrayerTimesUtils.toHijriDate
+import com.nibmz7gmail.sgprayertimemusollah.domain.ErrorTypes
+import com.nibmz7gmail.sgprayertimemusollah.ui.ProgressFragment
 
 
-class PrayerTimesFragment : DaggerFragment(), MainNavigationFragment {
+class PrayerTimesFragment : ProgressFragment(), MainNavigationFragment {
 
     @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var viewModel: PrayerTimesViewModel
@@ -48,19 +50,26 @@ class PrayerTimesFragment : DaggerFragment(), MainNavigationFragment {
 
     }
 
+    override fun retry() {
+        viewModel.getPrayerTimes()
+    }
+
     private fun handleUpdates(result: Result<CalendarData>) {
         when(result) {
             is Result.Success -> {
+                hideLoadingScreen()
                 Timber.i(result.data.toString())
                 val data = result.data.getActivePrayerTime()
                 populateData(result.data, data)
             }
             is Result.Error -> {
-                Timber.i("Error ${result.errorType}")
+                val msg = if(result.errorType == ErrorTypes.NETWORK) R.string.error_network
+                else R.string.error_date
+                showError(resources.getString(msg))
             }
 
             is Result.Loading -> {
-                Timber.i("Loading...")
+                showLoading()
             }
         }
     }
