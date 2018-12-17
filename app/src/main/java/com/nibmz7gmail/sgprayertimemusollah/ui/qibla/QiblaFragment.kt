@@ -1,6 +1,7 @@
 package com.nibmz7gmail.sgprayertimemusollah.ui.qibla
 
 import android.os.Bundle
+import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,10 +22,14 @@ import com.nibmz7gmail.sgprayertimemusollah.ui.prayertimes.PrayerTimesViewModel
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_prayertimes.*
 import kotlinx.android.synthetic.main.fragment_qibla.*
+import kotlinx.android.synthetic.main.toolbar.*
 import timber.log.Timber
 import javax.inject.Inject
 
 class QiblaFragment : PermissionFragment(), MainNavigationFragment {
+
+    private val accuracies = arrayOf("Unreliable", "Low", "Medium", "High", "Unknown")
+    private val colors = arrayOf("#FF5722", "#FF9800", "#8BC34A", "#4CAF50", "#4CAF50")
 
     @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var viewModel: QiblaViewModel
@@ -37,9 +42,17 @@ class QiblaFragment : PermissionFragment(), MainNavigationFragment {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        back.setOnClickListener {
+            requireActivity().onBackPressed()
+        }
+
+        title.text = "Qibla Compass"
+
         showLoadingWithText("Loading...\nMake sure location is turned on")
 
         viewModel = activityViewModelProvider(viewModelFactory)
+
+        displayAccuracy(4)
 
         viewModel.calendarDataObservable.observe(this, Observer {
 
@@ -59,8 +72,19 @@ class QiblaFragment : PermissionFragment(), MainNavigationFragment {
             }
         })
 
+        viewModel.accuracyObservable.observe(this, Observer {
+            displayAccuracy(it)
+        })
+
         retry()
 
+    }
+
+    private fun displayAccuracy(i: Int) {
+        val accuracy = accuracies[i]
+        val color = colors[i]
+        val message = "Start navigating with the compass while the phone is held horizontally.<br><br>Compass accuracy is : <font color=$color>$accuracy</font><br><br>\nTo improve accuracy, recalibrate your compass by waving your phone in a figure 8 motion."
+        message_box.text = Html.fromHtml(message)
     }
 
     override fun permissionGranted() {

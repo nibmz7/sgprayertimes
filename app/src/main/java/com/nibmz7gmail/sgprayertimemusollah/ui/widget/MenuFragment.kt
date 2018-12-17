@@ -1,5 +1,7 @@
 package com.nibmz7gmail.sgprayertimemusollah.ui.widget
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.ViewGroup
 import android.view.LayoutInflater
@@ -20,9 +22,30 @@ class MenuFragment: RoundedBottomSheetDialogFragment() {
 		super.onViewCreated(view, savedInstanceState)
 
 
-		navigation_view.setNavigationItemSelectedListener { menuItem ->
+		navigation_view.setNavigationItemSelectedListener {
 			// Bottom Navigation Drawer menu item clicks
-			Toast.makeText(context, "lol", Toast.LENGTH_LONG).show()
+			when(it.itemId) {
+				R.id.rate -> {
+					try {
+						startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.nibmz7gmail.sgprayertimemusollah")))
+					} catch (anfe: android.content.ActivityNotFoundException) {
+						startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.nibmz7gmail.sgprayertimemusollah")))
+					}
+				}
+				R.id.share -> {
+					val sharingIntent = Intent(Intent.ACTION_SEND)
+					sharingIntent.type = "text/plain"
+					sharingIntent.putExtra(Intent.EXTRA_SUBJECT, "SG Masjids & prayer times ")
+					sharingIntent.putExtra(Intent.EXTRA_TEXT, "https://play.google.com/store/apps/details?id=com.nibmz7gmail.sgprayertimemusollah")
+					startActivity(Intent.createChooser(sharingIntent, "Share via"))
+				}
+				R.id.githublink -> {
+					startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/nurilyas7/sgprayertimes")))
+				}
+				R.id.credits -> {
+
+				}
+			}
 			true
 		}
 

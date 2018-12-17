@@ -5,6 +5,7 @@ import android.content.Context.SENSOR_SERVICE
 import android.hardware.*
 import android.location.Location
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.nibmz7gmail.sgprayertimemusollah.core.result.Result
 import timber.log.Timber
 import javax.inject.Inject
@@ -34,8 +35,12 @@ class QiblaCompass @Inject constructor(
 
     var currentDegree = 0.0f
 
-    override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
+    private val _accuracy = MutableLiveData<Int>()
+    val accuracy: LiveData<Int>
+        get() = _accuracy
 
+    override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
+        _accuracy.value = accuracy
     }
 
     override fun onSensorChanged(event: SensorEvent) {

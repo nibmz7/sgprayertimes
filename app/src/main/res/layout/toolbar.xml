@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                app:layout_constraintTop_toTopOf="parent"
+                android:stateListAnimator="@animator/view_selected"
+                android:background="@color/white"
+>
+
+    <ImageButton
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_arrow_back"
+            android:paddingStart="18dp"
+            android:paddingEnd="18dp"
+            android:background="?android:attr/selectableItemBackground"
+    />
+
+    <TextView android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:textAppearance="@style/TextAppearance.PrayerTimes.Title"
+              android:layout_centerInParent="true"
+              android:id="@+id/title"
+    />
+
+</RelativeLayout>

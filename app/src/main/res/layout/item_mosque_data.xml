@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:padding="12dp"
+        android:background="@color/white"
+        android:stateListAnimator="@animator/view_elevation"
+        android:clickable="true"
+>
+
+    <TextView android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              app:layout_constraintTop_toTopOf="parent"
+              app:layout_constraintLeft_toLeftOf="parent"
+              android:text="Yusof Ishak"
+              android:id="@+id/mosque_name"
+              android:textSize="17sp"
+              android:textAppearance="@style/TextAppearance.PrayerTimes.Title"
+    />
+
+    <TextView android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:maxWidth="270dp"
+              app:layout_constraintTop_toBottomOf="@id/mosque_name"
+              app:layout_constraintLeft_toLeftOf="parent"
+              android:text="Woodlands Drive 50 S730839"
+              android:id="@+id/address"
+              android:maxLines="1"
+              android:ellipsize="end"
+              android:textAppearance="@style/TextAppearance.PrayerTimes.Content"
+    />
+
+    <TextView android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              app:layout_constraintTop_toBottomOf="@id/mosque_name"
+              app:layout_constraintRight_toRightOf="parent"
+              android:text="4.3km"
+              android:id="@+id/distance"
+              android:textAppearance="@style/TextAppearance.PrayerTimes.Content"
+    />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

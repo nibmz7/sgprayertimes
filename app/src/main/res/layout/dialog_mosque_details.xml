@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Widget.PrayerTimes.Dialog"
+        android:padding="12dp"
+        android:minWidth="300dp"
+>
+
+    <TextView android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              app:layout_constraintTop_toTopOf="parent"
+              app:layout_constraintLeft_toLeftOf="parent"
+              android:text="Yusof Ishak"
+              android:id="@+id/mosque_name"
+              android:textSize="17sp"
+              android:textAppearance="@style/TextAppearance.PrayerTimes.Title"
+    />
+
+    <ImageView android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:src="@drawable/ic_wcfriendly"
+               app:layout_constraintLeft_toRightOf="@id/mosque_name"
+               android:layout_marginStart="12dp"
+               app:layout_constraintTop_toTopOf="parent"
+               android:visibility="invisible"
+               android:id="@+id/wc_friendly"
+    />
+
+    <TextView android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              app:layout_constraintTop_toBottomOf="@id/mosque_name"
+              app:layout_constraintLeft_toLeftOf="parent"
+              android:text="Woodlands Drive 50 S730839"
+              android:id="@+id/address"
+              android:maxLines="1"
+              android:ellipsize="end"
+              android:textAppearance="@style/TextAppearance.PrayerTimes.Content"
+    />
+
+    <ImageView
+            android:id="@+id/imgMosque"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_centerVertical="true"
+            android:scaleType="fitCenter"
+            app:layout_constraintTop_toBottomOf="@id/address"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/directions"
+            android:layout_marginEnd="25dp"
+    />
+
+    <com.google.android.material.button.MaterialButton
+            android:id="@+id/directions"
+            android:layout_width="@dimen/button_width"
+            android:layout_height="wrap_content"
+            style="@style/Widget.PrayerTimes.OutlinedButton"
+            app:icon="@drawable/ic_directions"
+            android:text="Directions"
+            app:layout_constraintTop_toBottomOf="@id/address"
+            app:layout_constraintRight_toRightOf="parent"
+
+    />
+
+    <com.google.android.material.button.MaterialButton
+            android:id="@+id/facebook"
+            android:layout_width="@dimen/button_width"
+            android:layout_height="wrap_content"
+            style="@style/Widget.PrayerTimes.OutlinedButton"
+            app:icon="@drawable/ic_facebook"
+            android:text="Facebook"
+            app:layout_constraintTop_toBottomOf="@id/directions"
+            app:layout_constraintRight_toRightOf="parent"
+    />
+
+    <com.google.android.material.button.MaterialButton
+            android:id="@+id/share"
+            android:layout_width="@dimen/button_width"
+            android:layout_height="wrap_content"
+            style="@style/Widget.PrayerTimes.OutlinedButton"
+            app:icon="@drawable/ic_share"
+            android:text="Share"
+            app:layout_constraintTop_toBottomOf="@id/facebook"
+            app:layout_constraintRight_toRightOf="parent"
+    />
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

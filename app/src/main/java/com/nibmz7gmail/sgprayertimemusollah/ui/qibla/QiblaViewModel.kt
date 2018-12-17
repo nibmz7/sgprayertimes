@@ -18,6 +18,9 @@ class QiblaViewModel @Inject constructor(
 	val calendarDataObservable: LiveData<Result<FloatArray>>
         get() = _calendarDataObservable
 
+    val accuracyObservable: LiveData<Int>
+        get() = qiblaCompass.accuracy
+
     init {
         _calendarDataObservable.addSource(locationLiveData) {
             if(it == null) {

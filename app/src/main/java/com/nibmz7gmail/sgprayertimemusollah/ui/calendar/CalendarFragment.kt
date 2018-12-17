@@ -14,6 +14,7 @@ import com.nibmz7gmail.sgprayertimemusollah.core.util.activityViewModelProvider
 import com.nibmz7gmail.sgprayertimemusollah.core.util.showToast
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_calendar.*
+import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
 
 class CalendarFragment : DaggerFragment(), MainNavigationFragment {
@@ -30,6 +31,12 @@ class CalendarFragment : DaggerFragment(), MainNavigationFragment {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        back.setOnClickListener {
+            requireActivity().onBackPressed()
+        }
+
+        title.text = "Islamic Calendar"
+
         recyclerview.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
         recyclerview.adapter = adapter
 
@@ -43,7 +50,9 @@ class CalendarFragment : DaggerFragment(), MainNavigationFragment {
         recyclerview.addOnScrollListener( object : RecyclerView.OnScrollListener(){
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
-                header.isSelected = recyclerView.canScrollVertically(-1)
+                val isTrue = recyclerView.canScrollVertically(-1)
+                toolbar.isSelected = isTrue
+                header.isSelected = isTrue
             }
         })
 
