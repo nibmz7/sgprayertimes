@@ -26,6 +26,7 @@ import com.nibmz7gmail.sgprayertimemusollah.core.util.*
 import com.nibmz7gmail.sgprayertimemusollah.core.util.PrayerTimesUtils.TIME_OF_DAY
 import com.nibmz7gmail.sgprayertimemusollah.core.util.PrayerTimesUtils.getCurrentDate
 import com.nibmz7gmail.sgprayertimemusollah.core.util.PrayerTimesUtils.toHijriDate
+import com.nibmz7gmail.sgprayertimemusollah.core.util.PrayerTimesUtils.toTimeIdx
 import com.nibmz7gmail.sgprayertimemusollah.domain.ErrorTypes
 import com.nibmz7gmail.sgprayertimemusollah.ui.ProgressFragment
 
@@ -84,7 +85,7 @@ class PrayerTimesFragment : ProgressFragment(), MainNavigationFragment {
         sub_toolbar_title.text = calendarData.toHijriDate()
 
         val context = requireContext()
-        val idx = if(data.first > 4) data.first - 3 else 0
+        val idx = data.first.toTimeIdx()
         val color = if(data.first == 1 || data.first == 3) R.color.inactive else R.color.active
         val white = ContextCompat.getColor(context, R.color.white)
         val typeTxtSize = 28.5f
@@ -97,10 +98,8 @@ class PrayerTimesFragment : ProgressFragment(), MainNavigationFragment {
         )
         params.setMargins(context.dpToPixels(13f).toInt(), 0, context.dpToPixels(13f).toInt(), 0)
 
-
         for (i in 0 until list.childCount) {
             val cardView = list.getChildAt(i) as CardView
-            Timber.i(idx.toString())
             if(idx == i) {
                 cardView.apply {
                     layoutParams = params
