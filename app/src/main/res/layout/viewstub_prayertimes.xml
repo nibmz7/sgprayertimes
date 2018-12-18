@@ -5,7 +5,8 @@
         android:orientation="vertical"
         android:weightSum="1"
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/list"
+        android:id="@+id/root_list"
+        android:visibility="gone"
 >
     <RelativeLayout
             android:layout_width="match_parent"

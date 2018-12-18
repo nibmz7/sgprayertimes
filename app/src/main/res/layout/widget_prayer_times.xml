@@ -18,13 +18,16 @@
             android:background="#70808180"
             android:orientation="horizontal"
             android:gravity="center_vertical"
-            android:padding="7dp">
+            android:id="@+id/appBar"
+            >
 
             <ImageView
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_gravity="center_vertical"
-                android:src="@mipmap/ic_launcher" />
+                android:src="@mipmap/ic_launcher"
+                android:layout_marginStart="8dp"
+            />
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -32,8 +35,7 @@
                 android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:orientation="vertical"
-                android:layout_marginStart="7dp"
-                android:layout_marginLeft="7dp"
+                android:layout_marginStart="8dp"
                 >
                 <ImageView
                     android:id="@+id/header"
@@ -53,20 +55,17 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_refresh"
                 android:id="@+id/refreshButton"
-                android:layout_marginRight="3dp"
-                android:layout_marginLeft="3dp"
-                android:visibility="invisible"
+                android:padding="8dp"
                 />
 
         </LinearLayout>
 
-        <ViewStub
-                android:id="@+id/stub_list"
-                android:inflatedId="@+id/list"
-                android:layout="@layout/viewstub_prayertimes"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="0.2"
+        <include
+                layout="@layout/viewstub_prayertimes"
+        />
+
+        <include
+                layout="@layout/viewstub_loading"
         />
 
 

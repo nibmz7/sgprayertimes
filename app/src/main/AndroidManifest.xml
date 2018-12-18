@@ -25,8 +25,8 @@
         <receiver android:name=".WidgetPrayerTimes">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-                <action android:name="com.nibmz7.sgmasjids.ACTION_AUTO_UPDATE_WIDGET" />
                 <action android:name="com.nibmz7.sgmasjids.ACTION_REFRESH_WIDGET" />
+                <action android:name="com.nibmz7.sgmasjids.AUTO_UPDATE_WIDGET"/>
             </intent-filter>
 
             <meta-data

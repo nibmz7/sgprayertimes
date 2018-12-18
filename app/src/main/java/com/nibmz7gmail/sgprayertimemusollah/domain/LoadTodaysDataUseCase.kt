@@ -1,5 +1,8 @@
 package com.nibmz7gmail.sgprayertimemusollah.domain
 
+import android.app.PendingIntent
+import android.appwidget.AppWidgetManager
+import android.content.ComponentName
 import android.content.Context
 import androidx.annotation.MainThread
 import androidx.lifecycle.LiveData
@@ -7,10 +10,13 @@ import com.nibmz7gmail.sgprayertimemusollah.core.data.calendar.CalendarDataRepos
 import com.nibmz7gmail.sgprayertimemusollah.core.model.CalendarData
 import javax.inject.Inject
 import androidx.lifecycle.MutableLiveData
+import com.nibmz7gmail.sgprayertimemusollah.R
+import com.nibmz7gmail.sgprayertimemusollah.WidgetPrayerTimes
 import com.nibmz7gmail.sgprayertimemusollah.core.AsyncScheduler
 import com.nibmz7gmail.sgprayertimemusollah.core.result.Result
 import com.nibmz7gmail.sgprayertimemusollah.core.util.PrayerTimesUtils.getTodaysDate
 import timber.log.Timber
+
 
 enum class ErrorTypes{
     NETWORK,
@@ -33,7 +39,13 @@ class LoadTodaysDataUseCase @Inject constructor(
         if(!cacheIsUptoDate(isWidget)) {
             fetchNewData(isWidget)
         }
+    }
 
+    fun setCacheToNull() {
+        Timber.i("Cache cleared")
+        synchronized(loadCacheLock){
+            todaysDataCache = null
+        }
     }
 
     fun getCachedDate(): Result<CalendarData>? {
@@ -110,19 +122,15 @@ class LoadTodaysDataUseCase @Inject constructor(
     fun notifyObserver(isWidget: Boolean) {
         Timber.i("Notifying observer -> IsWidget=$isWidget")
         if(isWidget) {
-
+            notifyWidgets()
         } else {
             _liveData.value = todaysDataCache
         }
     }
 
-    fun notiftWidgets() {
-//        val appWidgetManager = AppWidgetManager.getInstance(context)
-//        val appWidgetIds = appWidgetManager.getAppWidgetIds(
-//            ComponentName(context, WidgetProvider::class.java)
-//        )
-//        appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.listview)
-        //context.sendBroadcast
+    private fun notifyWidgets() {
+        Timber.i("Updating widget called")
+        WidgetPrayerTimes.updateWidget(context, todaysDataCache)
     }
 
 

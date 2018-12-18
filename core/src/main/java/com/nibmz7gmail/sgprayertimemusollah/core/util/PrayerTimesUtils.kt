@@ -7,7 +7,6 @@ import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
 
-
 object PrayerTimesUtils {
 
     private const val DATE_PATTERN = "hh mm aa"
@@ -83,6 +82,13 @@ object PrayerTimesUtils {
         val calendar = Calendar.getInstance()
         val mdformat = SimpleDateFormat("EEEE, dd MMM yyyy", Locale.getDefault())
         return mdformat.format(calendar.time)
+    }
+
+    fun CalendarData.toBeautifiedDate() : String {
+        val dfInput = SimpleDateFormat("dd/M/yyyy", java.util.Locale.getDefault())
+        val dfOutput = SimpleDateFormat("EEEE, dd MMM yyyy", java.util.Locale.getDefault())
+        val parsedDate = dfInput.parse(this.date)
+        return dfOutput.format(parsedDate)
     }
 
     private fun SimpleDateFormat.parsePrayerTime(prayerTime: String, idx: Int): Date {

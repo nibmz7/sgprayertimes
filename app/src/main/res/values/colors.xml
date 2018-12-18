@@ -21,4 +21,6 @@
 
     <color name="active">#eb4d4b</color>
 
+    <color name="grey">#ff303030</color>
+
 </resources>
