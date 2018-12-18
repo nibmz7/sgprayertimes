@@ -10,7 +10,7 @@ import timber.log.Timber
 import javax.inject.Inject
 
 
-
+//https://stackoverflow.com/a/47058362/6314503 --- Broadcast injection
 class MainApplication : DaggerApplication(), HasBroadcastReceiverInjector {
 
 	@Inject

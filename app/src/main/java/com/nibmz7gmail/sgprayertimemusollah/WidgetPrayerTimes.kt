@@ -42,7 +42,6 @@ class WidgetPrayerTimes : AppWidgetProvider() {
     private val QS_LIGHT = "quicksandlight.ttf"
     private val QS_MEDIUM = "quicksandmedium.ttf"
     private val QS_BOLD = "quicksandbold.ttf"
-    private val TIME_OF_DAY_IMG_WHITE = arrayOf(R.drawable.prayer1_white, R.drawable.prayer2_white, R.drawable.prayer3_white, R.drawable.prayer4_white, R.drawable.prayer5_white)
     private val typeIds = arrayOf(R.id.type1, R.id.type2, R.id.type3, R.id.type4, R.id.type5)
     private val timeIds = arrayOf(R.id.time1, R.id.time2, R.id.time3, R.id.time4, R.id.time5)
     private val bgs = arrayOf(R.drawable.abg1, R.drawable.abg2, R.drawable.abg3, R.drawable.abg4, R.drawable.abg5)
