@@ -23,6 +23,7 @@ import javax.inject.Inject
 import android.util.TypedValue
 import com.nibmz7gmail.sgprayertimemusollah.R
 import com.nibmz7gmail.sgprayertimemusollah.core.util.*
+import com.nibmz7gmail.sgprayertimemusollah.core.util.PrayerTimesUtils.TIME_OF_DAY
 import com.nibmz7gmail.sgprayertimemusollah.core.util.PrayerTimesUtils.getCurrentDate
 import com.nibmz7gmail.sgprayertimemusollah.core.util.PrayerTimesUtils.toHijriDate
 import com.nibmz7gmail.sgprayertimemusollah.domain.ErrorTypes
@@ -30,6 +31,10 @@ import com.nibmz7gmail.sgprayertimemusollah.ui.ProgressFragment
 
 
 class PrayerTimesFragment : ProgressFragment(), MainNavigationFragment {
+
+
+    private val TIME_OF_DAY_IMG = arrayOf(R.drawable.prayer1, R.drawable.prayer2, R.drawable.prayer3, R.drawable.prayer4, R.drawable.prayer5)
+    private val TIME_OF_DAY_IMG_WHITE = arrayOf(R.drawable.prayer1_white, R.drawable.prayer2_white, R.drawable.prayer3_white, R.drawable.prayer4_white, R.drawable.prayer5_white)
 
     @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var viewModel: PrayerTimesViewModel
@@ -140,13 +145,5 @@ class PrayerTimesFragment : ProgressFragment(), MainNavigationFragment {
 
     override fun onBackPressed(): Boolean {
         return false
-    }
-
-
-
-    companion object {
-        val TIME_OF_DAY = arrayOf("Fajr", "Zuhr", "Asr", "Maghrib", "Isya'")
-        val TIME_OF_DAY_IMG = arrayOf(R.drawable.prayer1, R.drawable.prayer2, R.drawable.prayer3, R.drawable.prayer4, R.drawable.prayer5)
-        val TIME_OF_DAY_IMG_WHITE = arrayOf(R.drawable.prayer1_white, R.drawable.prayer2_white, R.drawable.prayer3_white, R.drawable.prayer4_white, R.drawable.prayer5_white)
     }
 }

@@ -22,6 +22,18 @@
 
         <activity android:name=".MainActivity" android:theme="@style/AppTheme" />
 
+        <receiver android:name=".WidgetPrayerTimes">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="com.nibmz7.sgmasjids.ACTION_AUTO_UPDATE_WIDGET" />
+                <action android:name="com.nibmz7.sgmasjids.ACTION_REFRESH_WIDGET" />
+            </intent-filter>
+
+            <meta-data
+                    android:name="android.appwidget.provider"
+                    android:resource="@xml/collection_widget_info" />
+        </receiver>
+
     </application>
 
 

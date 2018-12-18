@@ -1,5 +1,6 @@
 package com.nibmz7gmail.sgprayertimemusollah.core.util
 
+import com.nibmz7gmail.sgprayertimemusollah.core.R
 import com.nibmz7gmail.sgprayertimemusollah.core.model.CalendarData
 import timber.log.Timber
 import java.lang.Exception
@@ -19,6 +20,8 @@ object PrayerTimesUtils {
         "Maghrib prayer",
         "Isya' prayer"
     )
+
+    val TIME_OF_DAY = arrayOf("Fajr", "Zuhr", "Asr", "Maghrib", "Isya'")
 
     private val islamicMonths = arrayOf("Muharram", "Safar", "Rabiul-Awwal", "Rabi-uthani", "Jumadi-ul-Awwal", "Jumadi-uthani", "Rajab", "Sha’ban", "Ramadan", "Shawwal", "Zhul-Q’ada", "Zhul-Hijja")
 

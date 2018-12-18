@@ -38,11 +38,14 @@ import javax.inject.Singleton
         AppModule::class,
         ActivityBindingModule::class,
         ViewModelModule::class,
-        CoreModule::class
+        CoreModule::class,
+        UseCaseModule::class,
+        WidgetsModule::class
     ]
 )
 interface AppComponent : AndroidInjector<MainApplication> {
 
     @Component.Builder
     abstract class Builder : AndroidInjector.Builder<MainApplication>()
+
 }

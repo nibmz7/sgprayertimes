@@ -1,12 +1,20 @@
 package com.nibmz7gmail.sgprayertimemusollah
 
+import android.content.BroadcastReceiver
 import com.nibmz7gmail.sgprayertimemusollah.di.DaggerAppComponent
 import dagger.android.AndroidInjector
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.HasBroadcastReceiverInjector
 import dagger.android.support.DaggerApplication
 import timber.log.Timber
+import javax.inject.Inject
 
-class MainApplication : DaggerApplication() {
 
+
+class MainApplication : DaggerApplication(), HasBroadcastReceiverInjector {
+
+	@Inject
+	lateinit var broadcastReceiverInjector: DispatchingAndroidInjector<BroadcastReceiver>
 
 	override fun onCreate() {
 		super.onCreate()
@@ -18,5 +26,10 @@ class MainApplication : DaggerApplication() {
 			.builder()
 			.create(this)
 	}
+
+	override fun broadcastReceiverInjector(): DispatchingAndroidInjector<BroadcastReceiver>? {
+		return broadcastReceiverInjector
+	}
+
 
 }

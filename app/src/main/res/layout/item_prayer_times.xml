@@ -37,6 +37,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="22sp"
                     android:textColor="@color/text_grey"
+                    android:fontFamily="@font/qs_medium"
                     android:text="Fajr"
             />
 
@@ -50,6 +51,7 @@
                     android:includeFontPadding="false"
                     android:lineSpacingExtra="0dp"
                     android:padding="0dp"
+                    android:fontFamily="@font/qs_light"
             />
         </LinearLayout>
         <ImageView
@@ -73,6 +75,7 @@
                 android:visibility="gone"
                 android:textSize="13sp"
                 android:textColor="@color/text_grey"
+                android:fontFamily="@font/qs_light"
         />
     </RelativeLayout>
 

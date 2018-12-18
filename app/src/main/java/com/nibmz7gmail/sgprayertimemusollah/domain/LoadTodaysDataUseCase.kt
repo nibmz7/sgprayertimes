@@ -10,9 +10,7 @@ import androidx.lifecycle.MutableLiveData
 import com.nibmz7gmail.sgprayertimemusollah.core.AsyncScheduler
 import com.nibmz7gmail.sgprayertimemusollah.core.result.Result
 import com.nibmz7gmail.sgprayertimemusollah.core.util.PrayerTimesUtils.getTodaysDate
-import com.nibmz7gmail.sgprayertimemusollah.core.util.toString
 import timber.log.Timber
-import java.util.*
 
 enum class ErrorTypes{
     NETWORK,
@@ -44,7 +42,7 @@ class LoadTodaysDataUseCase @Inject constructor(
         }
     }
 
-    private fun cacheIsUptoDate(isWidget: Boolean): Boolean {
+    fun cacheIsUptoDate(isWidget: Boolean): Boolean {
         synchronized(loadCacheLock) {
             val currentDate = getTodaysDate()
 

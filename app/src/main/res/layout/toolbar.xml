@@ -5,7 +5,7 @@
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 app:layout_constraintTop_toTopOf="parent"
                 android:stateListAnimator="@animator/view_selected"
-                android:background="@color/white"
+                android:background="@color/toolbar"
 >
 
     <ImageButton

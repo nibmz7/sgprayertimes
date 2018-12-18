@@ -17,4 +17,7 @@
     <dimen name="bottom_sheet_top_padding">8dp</dimen>
 
     <dimen name="button_width">170dp</dimen>
+
+    <dimen name="widget_margin">8dp</dimen>
+
 </resources>

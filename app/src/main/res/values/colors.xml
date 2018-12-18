@@ -16,6 +16,9 @@
     <color name="highlight_light">#33ffffff</color> <!-- 20% white -->
 
     <color name="inactive">#6ab04c</color>
+
+    <color name="toolbar">#F2FFFFFF</color>
+
     <color name="active">#eb4d4b</color>
 
 </resources>
