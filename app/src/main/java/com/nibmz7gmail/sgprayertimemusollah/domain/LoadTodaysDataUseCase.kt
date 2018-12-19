@@ -36,8 +36,10 @@ class LoadTodaysDataUseCase @Inject constructor(
 
     operator fun invoke(isWidget: Boolean) {
 
-        if(!cacheIsUptoDate(isWidget)) {
+        if(!cacheIsUptoDate()) {
             fetchNewData(isWidget)
+        } else {
+            if(!isWidget) _liveData.value = todaysDataCache
         }
     }
 
@@ -54,14 +56,13 @@ class LoadTodaysDataUseCase @Inject constructor(
         }
     }
 
-    fun cacheIsUptoDate(isWidget: Boolean): Boolean {
+    fun cacheIsUptoDate(): Boolean {
         synchronized(loadCacheLock) {
             val currentDate = getTodaysDate()
 
             todaysDataCache?.let {
                 if(it is Result.Success) {
                     if(it.data.date != currentDate) return false
-                    notifyObserver(isWidget)
                     Timber.i("Cache exists")
                     return true
                 }

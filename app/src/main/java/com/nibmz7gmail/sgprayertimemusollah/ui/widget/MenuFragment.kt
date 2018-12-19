@@ -43,7 +43,7 @@ class MenuFragment: RoundedBottomSheetDialogFragment() {
 					startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/nurilyas7/sgprayertimes")))
 				}
 				R.id.credits -> {
-
+					startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://sg-prayer-times.firebaseapp.com/licenses.html")))
 				}
 			}
 			true

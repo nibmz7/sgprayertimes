@@ -20,9 +20,10 @@
               android:text="Seems like bla bla bla bla"
               android:gravity="center"
               android:padding="8dp"
-              android:textAppearance="@style/TextAppearance.PrayerTimes.Body"
+                  android:textAppearance="@style/TextAppearance.PrayerTimes.Content"
               android:id="@+id/info_message"
               android:layout_below="@+id/loadingBar"
+              android:textSize="15sp"
               android:visibility="gone"
     />
 

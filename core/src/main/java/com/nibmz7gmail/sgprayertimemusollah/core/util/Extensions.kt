@@ -14,9 +14,6 @@ import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.*
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.Types
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -89,30 +86,6 @@ inline fun <reified VM : ViewModel> Fragment.viewModelProvider(
 inline fun <reified VM : ViewModel> Fragment.activityViewModelProvider(
     provider: ViewModelProvider.Factory
 ) = ViewModelProviders.of(requireActivity(), provider).get(VM::class.java)
-
-inline fun <reified T> String.toListItems(): List<T>? {
-
-    val moshi = Moshi.Builder()
-        .add(KotlinJsonAdapterFactory())
-        .build()
-
-    val type = Types.newParameterizedType(List::class.java, T::class.java)
-    val dataAdapter = moshi.adapter<List<T>>(type)
-
-    return dataAdapter.fromJson(this)
-}
-
-inline fun <reified T> List<T>.toJsonString(): String {
-
-    val moshi = Moshi.Builder()
-        .add(KotlinJsonAdapterFactory())
-        .build()
-
-    val type = Types.newParameterizedType(List::class.java, T::class.java)
-    val dataAdapter = moshi.adapter<List<T>>(type)
-
-    return dataAdapter.toJson(this)
-}
 
 inline fun FragmentManager.inTransaction(func: FragmentTransaction.() -> FragmentTransaction?) {
     beginTransaction().func()?.commit()

@@ -11,7 +11,7 @@
     <color name="divider">#4D888383</color>
 
     <color name="text_grey">#8D9599</color>
-    <color name="black_20">#59000000</color>
+    <color name="time_text">#7C7C7C</color>
 
     <color name="highlight_light">#33ffffff</color> <!-- 20% white -->
 

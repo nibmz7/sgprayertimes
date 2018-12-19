@@ -1,8 +1,6 @@
 package com.nibmz7gmail.sgprayertimemusollah.core.util
 
-import com.nibmz7gmail.sgprayertimemusollah.core.R
 import com.nibmz7gmail.sgprayertimemusollah.core.model.CalendarData
-import com.nibmz7gmail.sgprayertimemusollah.core.util.PrayerTimesUtils.timeDifference
 import timber.log.Timber
 import java.lang.Exception
 import java.text.SimpleDateFormat
@@ -49,7 +47,6 @@ object PrayerTimesUtils {
                 for (i in 0..4) {
                     val currentPrayerTime = sdf.parsePrayerTime(list[i], i)
                     val nextPrayerTime = sdf.parsePrayerTime(list[i + 1], i + 1)
-                    Timber.i("$currentPrayerTime  $nextPrayerTime\n")
                     if (currentTime.isBetween(currentPrayerTime, nextPrayerTime)) {
                         activeTime += 1
                         infoText = nextPrayerTime.timeDifference(activeTime, currentTime.time)

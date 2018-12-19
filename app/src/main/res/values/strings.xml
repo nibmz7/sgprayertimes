@@ -2,16 +2,8 @@
     <string name="app_name">SG Prayer Times</string>
     <string name="app_version">App version 3.0</string>
 
-    <string name="no_location_detected">
-        No location detected. Make sure location is enabled on the device.
-    </string>
-
     <string name="permission_denied_explanation">
         Permission was denied, but is needed for app to function.
-    </string>
-
-    <string name="permission_rationale">
-        Location permission is needed for this feature to work
     </string>
 
     <string name="share_app">Share this app with others</string>

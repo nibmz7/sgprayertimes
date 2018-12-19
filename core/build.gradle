@@ -15,7 +15,7 @@ android {
         versionCode 1
         versionName "1.0"
 
-        buildConfigField "String", "CALENDAR_DATA_URL", "\"https://sg-prayer-times.firebaseapp.com/prayer_times.json\""
+        buildConfigField "String", "CALENDAR_DATA_URL", "\"https://sg-prayer-times.firebaseapp.com/prayer_times.csv\""
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -23,7 +23,11 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -57,9 +61,6 @@ dependencies {
     //room
     api "androidx.room:room-runtime:$rootProject.roomVersion"
     kapt "androidx.room:room-compiler:$rootProject.roomVersion"
-
-    //moshi
-    implementation "com.squareup.moshi:moshi-kotlin:$rootProject.moshiVersion"
 
     //Play services Location API
     implementation "com.google.android.gms:play-services-location:$rootProject.locationVersion"

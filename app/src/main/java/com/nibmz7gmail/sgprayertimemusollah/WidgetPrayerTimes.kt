@@ -44,7 +44,11 @@ class WidgetPrayerTimes : AppWidgetProvider() {
 
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
         Timber.i("OnUpdate Called")
-        val result = loadTodaysDataUseCase.getCachedDate()
+        val cacheExists = loadTodaysDataUseCase.cacheIsUptoDate()
+
+        val result = if(cacheExists) {
+            loadTodaysDataUseCase.getCachedDate()
+        } else null
 
         for (appWidgetId in appWidgetIds) {
             updateAppWidget(context, appWidgetManager, appWidgetId, result)
@@ -57,7 +61,6 @@ class WidgetPrayerTimes : AppWidgetProvider() {
 
     override fun onEnabled(context: Context) {
         // Enter relevant functionality for when the first widget is created
-        Timber.e("Alarm set")
         setAlarm(context)
     }
 
@@ -70,7 +73,11 @@ class WidgetPrayerTimes : AppWidgetProvider() {
         AndroidInjection.inject(this, context)
         super.onReceive(context, intent)
 
-        if(ACTION_REFRESH_WIDGET == intent.action) loadTodaysDataUseCase.setCacheToNull()
+        if(ACTION_REFRESH_WIDGET == intent.action) {
+            cancelAlarm(context)
+            setAlarm(context)
+            loadTodaysDataUseCase.setCacheToNull()
+        }
 
         if (ACTION_REFRESH_WIDGET == intent.action || ACTION_AUTO_UPDATE == intent.action) {
             Timber.i("Refresh Widget called")
@@ -91,6 +98,7 @@ class WidgetPrayerTimes : AppWidgetProvider() {
     }
 
     private fun setAlarm(context: Context) {
+        Timber.i("Alarm set")
         val intent = Intent(context, WidgetPrayerTimes::class.java)
         intent.action = ACTION_AUTO_UPDATE
         val alarmIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT) //You need to specify a proper flag for the intent. Or else the intent will become deleted.
@@ -149,13 +157,13 @@ class WidgetPrayerTimes : AppWidgetProvider() {
                 for (i in 0..4) {
 
                     context.apply {
-                        views.setImageViewBitmap(typeIds[i], getFontBitmap(19f, white, QS_MEDIUM, TIME_OF_DAY[i]))
-                        views.setImageViewBitmap(timeIds[i], getFontBitmap(19f, white, QS_LIGHT, result.data.prayerTimes[i]))
+                        views.setImageViewBitmap(typeIds[i], getFontBitmap(24f, white, QS_MEDIUM, TIME_OF_DAY[i]))
+                        views.setImageViewBitmap(timeIds[i], getFontBitmap(20f, white, QS_LIGHT, result.data.prayerTimes[i]))
                     }
                 }
 
                 val hijriDate = result.data.hijriDate
-                if (hijriDate.eventH == "nil")
+                if (hijriDate.eventH == "")
                     views.setImageViewBitmap(
                         R.id.sub_header,
                         context.getFontBitmap(11f, white, QS_BOLD, result.data.toHijriDate())

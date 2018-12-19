@@ -40,6 +40,7 @@ class QiblaCompass @Inject constructor(
         get() = _accuracy
 
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
+        Timber.i("Accuracy changed: $accuracy")
         _accuracy.value = accuracy
     }
 

@@ -1,9 +1,9 @@
 package com.nibmz7gmail.sgprayertimemusollah.core.data.calendar.remote
 
 import android.content.Context
+import com.nibmz7gmail.sgprayertimemusollah.core.data.calendar.remote.CSVDataParser.parseCalendar
 import com.nibmz7gmail.sgprayertimemusollah.core.model.CalendarData
 import com.nibmz7gmail.sgprayertimemusollah.core.util.isConnectedToInternet
-import com.nibmz7gmail.sgprayertimemusollah.core.util.toListItems
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -29,10 +29,10 @@ class RemoteCalendarDataSource @Inject constructor(
             null
         }
 
-        val jsonData = responseSource?.body()?.string() ?: return null
+        val csvData = responseSource?.body()?.byteStream() ?: return null
 
         val parsedData = try {
-            jsonData.toListItems<CalendarData>()
+            parseCalendar(csvData)
         } catch (e: Exception) {
             Timber.e(e, "Error parsing downloaded data")
             null

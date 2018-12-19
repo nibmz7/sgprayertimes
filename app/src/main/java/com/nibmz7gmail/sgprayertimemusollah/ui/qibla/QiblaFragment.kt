@@ -29,7 +29,7 @@ import javax.inject.Inject
 class QiblaFragment : PermissionFragment(), MainNavigationFragment {
 
     private val accuracies = arrayOf("Unreliable", "Low", "Medium", "High", "Unknown")
-    private val colors = arrayOf("#FF5722", "#FF9800", "#8BC34A", "#4CAF50", "#4CAF50")
+    private val colors = arrayOf("#FF5722", "#FF9800", "#8BC34A", "#4CAF50", "#7f8c8d")
 
     @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var viewModel: QiblaViewModel

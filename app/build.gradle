@@ -6,18 +6,23 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 android {
+
     compileSdkVersion rootProject.compileSdkVersion
     defaultConfig {
         applicationId "com.nibmz7gmail.sgprayertimemusollah"
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
-        versionCode 23
+        versionCode 24
         versionName "3.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -31,7 +36,6 @@ dependencies {
     implementation "androidx.appcompat:appcompat:$rootProject.appcompatVersion"
     implementation "androidx.constraintlayout:constraintlayout:$rootProject.constraintLayoutVersion"
     implementation "com.google.android.material:material:$rootProject.materialVersion"
-    implementation "com.google.android:flexbox:$rootProject.flexboxVersion"
 
     // Architecture Components
     implementation "androidx.lifecycle:lifecycle-extensions:$rootProject.lifecycleVersion"

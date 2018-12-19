@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.nibmz7gmail.sgprayertimemusollah.MainNavigationFragment
 import com.nibmz7gmail.sgprayertimemusollah.R
+import com.nibmz7gmail.sgprayertimemusollah.core.util.PrayerTimesUtils.getTodaysDate
 import com.nibmz7gmail.sgprayertimemusollah.core.util.activityViewModelProvider
 import com.nibmz7gmail.sgprayertimemusollah.core.util.showToast
 import dagger.android.support.DaggerFragment
@@ -43,8 +44,11 @@ class CalendarFragment : DaggerFragment(), MainNavigationFragment {
         viewModel = activityViewModelProvider(viewModelFactory)
 
         viewModel.calendarDataObservable.observe(this, Observer {
+            val todaysDate = getTodaysDate()
             loadingBar.visibility = View.GONE
             adapter.submitList(it)
+            val pos = it.indexOfFirst { data -> data.date == todaysDate }
+            recyclerview.scrollToPosition(pos)
         })
 
         recyclerview.addOnScrollListener( object : RecyclerView.OnScrollListener(){

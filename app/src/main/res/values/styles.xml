@@ -19,7 +19,7 @@
 
 
     <style name="Widget.PrayerTimes.TextView" parent="@android:style/Widget.Material.TextView">
-        <item name="android:textAppearance">@style/TextAppearance.PrayerTimes.Body</item>
+        <item name="android:textAppearance">@style/TextAppearance.PrayerTimes.Content</item>
         <item name="android:lineSpacingMultiplier">@dimen/text_line_spacing</item>
     </style>
 
@@ -33,10 +33,6 @@
     <style name="TextAppearance.PrayerTimes.Title" parent="@style/TextAppearance.AppCompat.Title">
         <item name="android:textSize">22sp</item>
         <item name="android:fontFamily">@font/qs_bold</item>
-    </style>
-
-    <style name="TextAppearance.PrayerTimes.Body" parent="@style/TextAppearance.AppCompat.Body1">
-        <item name="android:textColor">?android:textColorSecondary</item>
     </style>
 
     <style name="Widget.PrayerTimes.FABlikeButton" parent="@style/Widget.MaterialComponents.Button">
@@ -103,13 +99,6 @@
     <style name="DialogAnimation">
         <item name="android:windowEnterAnimation">@anim/slide_up</item>
         <item name="android:windowExitAnimation">@anim/slide_down</item>
-    </style>
-
-    <style name="Widget.PrayerTimes.CardView" parent="@style/Widget.MaterialComponents.CardView">
-        <item name="cardCornerRadius">0dp</item>
-        <item name="cardUseCompatPadding">false</item>
-        <item name="android:layout_marginRight">25dp</item>
-        <item name="android:layout_marginLeft">25dp</item>
     </style>
 
 </resources>

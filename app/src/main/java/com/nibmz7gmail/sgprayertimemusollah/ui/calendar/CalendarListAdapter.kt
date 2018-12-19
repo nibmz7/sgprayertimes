@@ -32,14 +32,14 @@ class CalendarAdapter : ListAdapter<CalendarData, CalendarAdapter.ItemViewholder
 
     class ItemViewholder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val days = arrayOf("Mon", "Tues", "Wed", "Thurs", "Fri", "Sat", "Sun")
-        private val ids = arrayOf(R.id.timeTxt1, R.id.timeTxt2, R.id.timeTxt3, R.id.timeTxt4, R.id.timeTxt5, R.id.timeTxt6)
+        private val ids = arrayOf(R.id.timeTxt1, R.id.timeTxt3, R.id.timeTxt4, R.id.timeTxt5, R.id.timeTxt6, R.id.timeTxt2)
         private val currentDate = getTodaysDate()
 
         fun bind(item: CalendarData) = with(itemView) {
             this.hijriDate.text = item.toHijriDate()
             this.date.text = item.date
             this.day.text = days[item.day]
-            this.event.text = item.hijriDate.eventH
+            this.event.text = if(item.hijriDate.eventH == "") "nil" else item.hijriDate.eventH
 
             for(i in 0..5) {
                 this.findViewById<TextView>(ids[i]).text = item.prayerTimes[i]
