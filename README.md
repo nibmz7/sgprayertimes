@@ -14,7 +14,8 @@ I will write about my journey in learning how to assemble this app. Coming from 
 [Icons by Freepik from flaticon](https://www.flaticon.com/), <br>
 [Android Open Source Project (AOSP)](https://source.android.com/), <br>
 [iosched app](https://github.com/google/iosched), <br>
-And many other libraries!
+[Design inspired by Notgraphics](https://dribbble.com/shots/2743209-Prayer-Time-App)
+And not forgetting all the other open-sourced libraries!
 
 # License
 ```
