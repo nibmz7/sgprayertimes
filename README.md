@@ -15,7 +15,7 @@ I will write about my journey in learning how to assemble this app. Coming from 
 [Android Open Source Project (AOSP)](https://source.android.com/), <br>
 [iosched app](https://github.com/google/iosched), <br>
 [Design inspired by Notgraphics](https://dribbble.com/shots/2743209-Prayer-Time-App), <br>
-And not forgetting all the other open-sourced libraries!
+And not forgetting all the other open-source libraries!
 
 # License
 ```
