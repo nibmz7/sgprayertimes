@@ -130,7 +130,7 @@ class WidgetPrayerTimes : AppWidgetProvider() {
 
             views.setViewVisibility(R.id.appBar, View.GONE)
 
-            val configIntent = Intent(context, MainActivity::class.java)
+            val configIntent = Intent(context, LauncherActivity::class.java)
             val configPendingIntent = PendingIntent.getActivity(context, 0, configIntent, 0)
             views.setOnClickPendingIntent(R.id.root, configPendingIntent)
 

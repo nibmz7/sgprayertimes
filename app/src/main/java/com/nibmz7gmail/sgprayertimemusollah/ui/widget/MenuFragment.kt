@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.ViewGroup
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.Toast
 import com.nibmz7gmail.sgprayertimemusollah.R
 import kotlinx.android.synthetic.main.frag_bottomsheet_menu.*
 

@@ -83,7 +83,7 @@ class QiblaFragment : PermissionFragment(), MainNavigationFragment {
     private fun displayAccuracy(i: Int) {
         val accuracy = accuracies[i]
         val color = colors[i]
-        val message = "Start navigating with the compass while the phone is held horizontally.<br><br>Compass accuracy is : <font color=$color>$accuracy</font><br><br>\nTo improve accuracy, recalibrate your compass by waving your phone in a figure 8 motion."
+        val message = "Start navigating with the compass while the phone is held horizontally.<br><br>Compass accuracy is : <font color=$color>$accuracy</font><br><br>\nTo improve accuracy, shake your phone vigorously."
         message_box.text = Html.fromHtml(message)
     }
 

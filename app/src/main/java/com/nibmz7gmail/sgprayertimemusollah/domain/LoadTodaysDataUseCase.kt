@@ -75,6 +75,7 @@ class LoadTodaysDataUseCase @Inject constructor(
     private fun fetchNewData(isWidget: Boolean) {
         synchronized(loadCacheLock) {
             val currentDate = getTodaysDate()
+            Timber.i("Today's date is $currentDate")
 
             todaysDataCache?.let {
                 if (it is Result.Success && it.data.date == currentDate) {

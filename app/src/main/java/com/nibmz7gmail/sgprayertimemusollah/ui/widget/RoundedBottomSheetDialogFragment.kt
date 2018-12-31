@@ -8,7 +8,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.nibmz7gmail.sgprayertimemusollah.R
-import timber.log.Timber
+
 
 
 open class RoundedBottomSheetDialogFragment : BottomSheetDialogFragment() {
@@ -20,10 +20,8 @@ open class RoundedBottomSheetDialogFragment : BottomSheetDialogFragment() {
 		val dialog = BottomSheetDialog(requireContext(), theme)
 
 		dialog.setOnShowListener { dialog2 ->
+
 			val d = dialog2 as BottomSheetDialog
-
-			Timber.i("${d.window?.attributes?.dimAmount}")
-
 
 			val bottomSheet = d.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet) as FrameLayout?
 
@@ -43,8 +41,10 @@ open class RoundedBottomSheetDialogFragment : BottomSheetDialogFragment() {
 
 				override fun onSlide(bottomSheet: View, slideOffset: Float) {
 					//For visual appeal
-					if(slideOffset.isNaN()) return
+					if(slideOffset.isNaN() || android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.P)
+						return
 					d.window?.setDimAmount((slideOffset + 1) * 0.6f)
+
 				}
 			})
 		}

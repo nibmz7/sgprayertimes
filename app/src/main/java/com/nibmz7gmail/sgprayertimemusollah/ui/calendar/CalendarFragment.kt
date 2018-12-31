@@ -12,7 +12,6 @@ import com.nibmz7gmail.sgprayertimemusollah.MainNavigationFragment
 import com.nibmz7gmail.sgprayertimemusollah.R
 import com.nibmz7gmail.sgprayertimemusollah.core.util.PrayerTimesUtils.getTodaysDate
 import com.nibmz7gmail.sgprayertimemusollah.core.util.activityViewModelProvider
-import com.nibmz7gmail.sgprayertimemusollah.core.util.showToast
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_calendar.*
 import kotlinx.android.synthetic.main.toolbar.*

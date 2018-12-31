@@ -23,15 +23,12 @@ class QiblaCompass @Inject constructor(
     context: Context
 ): SensorEventListener, LiveData<Result<FloatArray>>() {
 
-    private val sensorManager: SensorManager = context.getSystemService(SENSOR_SERVICE) as SensorManager
+    private val sensorManager: SensorManager
     private val sensor: Sensor
 
     private val target = Location("Kabba Loc")
 
     private var userLoc: Location? = null
-
-    // Prevents multiple consumers requesting data at the same time
-    private val locationDataLock = Any()
 
     var currentDegree = 0.0f
 
@@ -79,8 +76,7 @@ class QiblaCompass @Inject constructor(
 
     fun start(location: Location) {
         Timber.i("Compass started")
-            userLoc = location
-
+        userLoc = location
         sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_GAME) //SensorManager.SENSOR_DELAY_Fastest
     }
 
@@ -106,6 +102,7 @@ class QiblaCompass @Inject constructor(
         Timber.i("Compass created")
         target.latitude = 21.422487 //kaaba latitude setting
         target.longitude = 39.826206 //kaaba longitude setting
+        sensorManager = context.getSystemService(SENSOR_SERVICE) as SensorManager
         sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION)
     }
 

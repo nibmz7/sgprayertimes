@@ -7,7 +7,6 @@
 >
 
     <include layout="@layout/toolbar"
-             android:id="@+id/toolbar"
     />
 
     <include layout="@layout/progress_layout"/>

@@ -50,7 +50,6 @@ object CSVDataParser {
                 )
 
                 calendar.add(calendarData)
-                Timber.i(calendarData.toString())
             }
 
             line = csvReader.readLine()

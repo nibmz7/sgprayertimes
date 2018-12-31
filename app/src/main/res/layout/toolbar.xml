@@ -6,6 +6,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 android:stateListAnimator="@animator/view_selected"
                 android:background="@color/toolbar"
+                android:id="@+id/toolbar"
 >
 
     <ImageButton
