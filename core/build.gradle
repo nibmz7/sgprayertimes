@@ -38,29 +38,29 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     // Architecture Components
-    implementation "androidx.lifecycle:lifecycle-extensions:$rootProject.lifecycleVersion"
-    implementation "androidx.lifecycle:lifecycle-livedata:$rootProject.lifecycleVersion"
-    implementation "androidx.lifecycle:lifecycle-viewmodel:$rootProject.lifecycleVersion"
+    implementation deps.androidx.lifecycle.extensions
+    implementation deps.androidx.lifecycle.livedata
+    implementation deps.androidx.lifecycle.viewmodel
 
     // Utils
-    api "com.jakewharton.timber:timber:$rootProject.timberVersion"
+    api deps.timber
 
     // OkHttp
-    implementation "com.squareup.okhttp3:okhttp:$rootProject.okhttpVersion"
-    implementation "com.squareup.okhttp3:logging-interceptor:$rootProject.okhttpVersion"
+    implementation deps.okhttp.client
+    implementation deps.okhttp.logging
 
     // Kotlin
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$rootProject.kotlinVersion"
+    implementation deps.kotlin
 
     // Dagger
-    implementation "com.google.dagger:dagger-android:$rootProject.dagger"
-    implementation "com.google.dagger:dagger-android-support:$rootProject.dagger"
-    kapt "com.google.dagger:dagger-compiler:$rootProject.dagger"
-    kapt "com.google.dagger:dagger-android-processor:$rootProject.dagger"
+    implementation deps.dagger.androidRuntime
+    implementation deps.dagger.androidSupportRuntime
+    kapt deps.dagger.compiler
+    kapt deps.dagger.androidCompiler
 
     //room
-    api "androidx.room:room-runtime:$rootProject.roomVersion"
-    kapt "androidx.room:room-compiler:$rootProject.roomVersion"
+    api deps.androidx.room.runtime
+    kapt deps.androidx.room.compiler
 
     //Play services Location API
     implementation "com.google.android.gms:play-services-location:$rootProject.locationVersion"
@@ -71,5 +71,5 @@ dependencies {
     testImplementation "org.mockito:mockito-core:$rootProject.mockitoVersion"
 
     // Room test
-    androidTestImplementation "androidx.room:room-testing:$rootProject.roomVersion"
+    androidTestImplementation "androidx.room:room-testing:${versions.room}"
 }

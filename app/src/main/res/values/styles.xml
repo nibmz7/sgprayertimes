@@ -8,9 +8,10 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:textViewStyle">@style/Widget.PrayerTimes.TextView</item>
         <item name="android:navigationBarColor">@android:color/white</item>
-        <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">true</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">false</item>
         <item name="android:statusBarColor">@color/highlight_light</item>
         <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
+
     </style>
 
     <style name="AppTheme.Launcher" parent="@style/AppTheme">

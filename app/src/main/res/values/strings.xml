@@ -16,4 +16,7 @@
 
     <string name="error_network">Failed to fetch data from the server.\nPlease check your network connection.</string>
     <string name="error_date">Date not found in database.\nPlease check your time &amp; date settings.</string>
+
+    <string name="loading_info">Loading…Make sure location is <b>turned on</b></string>
+    <string name="compass_unsupprted_message">Your device is currently not supported!</string>
 </resources>

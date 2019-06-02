@@ -8,6 +8,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.nibmz7gmail.sgprayertimemusollah.core.result.Result
 import timber.log.Timber
+import java.lang.IllegalStateException
 import javax.inject.Inject
 import kotlin.math.atan2
 import kotlin.math.cos
@@ -17,14 +18,15 @@ enum class QiblaError{
     ACCURACY,
     NULL
 }
+const val COMPASS_UNSUPPORTED =5
 
 //https://stackoverflow.com/questions/4308262/calculate-compass-bearing-heading-to-location-in-android/44249170
 class QiblaCompass @Inject constructor(
     context: Context
 ): SensorEventListener, LiveData<Result<FloatArray>>() {
 
-    private val sensorManager: SensorManager
-    private val sensor: Sensor
+    private var sensorManager: SensorManager? = null
+    private lateinit var sensor: Sensor
 
     private val target = Location("Kabba Loc")
 
@@ -77,13 +79,13 @@ class QiblaCompass @Inject constructor(
     fun start(location: Location) {
         Timber.i("Compass started")
         userLoc = location
-        sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_GAME) //SensorManager.SENSOR_DELAY_Fastest
+        sensorManager?.registerListener(this, sensor, SensorManager.SENSOR_DELAY_GAME) //SensorManager.SENSOR_DELAY_Fastest
     }
 
     override fun onInactive() {
         super.onInactive()
         Timber.i("Compass Paused")
-        sensorManager.unregisterListener(this)
+        sensorManager?.unregisterListener(this)
     }
 
     private fun calculateBearingAngle(from: Location, to: Location): Float {
@@ -99,11 +101,20 @@ class QiblaCompass @Inject constructor(
     }
 
     init {
-        Timber.i("Compass created")
-        target.latitude = 21.422487 //kaaba latitude setting
-        target.longitude = 39.826206 //kaaba longitude setting
-        sensorManager = context.getSystemService(SENSOR_SERVICE) as SensorManager
-        sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION)
+
+        try {
+            Timber.i("Compass created")
+            target.latitude = 21.422487 //kaaba latitude setting
+            target.longitude = 39.826206 //kaaba longitude setting
+            sensorManager = context.getSystemService(SENSOR_SERVICE) as SensorManager
+            sensor = sensorManager!!.getDefaultSensor(Sensor.TYPE_ORIENTATION)
+
+        } catch (e: Exception) {
+            _accuracy.value = COMPASS_UNSUPPORTED
+        }
+
+
+
     }
 
 }

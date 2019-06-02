@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.nibmz7gmail.sgprayertimemusollah.MainActivity
 import com.nibmz7gmail.sgprayertimemusollah.MainNavigationFragment
 import com.nibmz7gmail.sgprayertimemusollah.R
+import com.nibmz7gmail.sgprayertimemusollah.core.data.qiblafinder.COMPASS_UNSUPPORTED
 import com.nibmz7gmail.sgprayertimemusollah.core.model.CalendarData
 import com.nibmz7gmail.sgprayertimemusollah.core.result.Result
 import com.nibmz7gmail.sgprayertimemusollah.core.util.activityViewModelProvider
@@ -48,7 +49,7 @@ class QiblaFragment : PermissionFragment(), MainNavigationFragment {
 
         title.text = "Qibla Compass"
 
-        showLoadingWithText("Loading...\nMake sure location is turned on")
+        showLoadingWithText(getString(R.string.loading_info))
 
         viewModel = activityViewModelProvider(viewModelFactory)
 
@@ -73,7 +74,11 @@ class QiblaFragment : PermissionFragment(), MainNavigationFragment {
         })
 
         viewModel.accuracyObservable.observe(this, Observer {
-            displayAccuracy(it)
+            if(it == COMPASS_UNSUPPORTED) {
+                showMessage(getString(R.string.compass_unsupprted_message))
+            } else {
+                displayAccuracy(it)
+            }
         })
 
         retry()

@@ -85,22 +85,22 @@ class PrayerTimesFragment : ProgressFragment(), MainNavigationFragment {
         sub_toolbar_title.text = calendarData.toHijriDate()
 
         val context = requireContext()
-        val idx = data.first.toTimeIdx()
+        val idx = data.first
         val color = if(data.first == 1 || data.first == 3) R.color.inactive else R.color.active
         val white = ContextCompat.getColor(context, R.color.white)
         val typeTxtSize = 28.5f
         val timeTxetSize = 23.4f
         val imgViewSize = context.dpToPixels(70f)
 
-        val params = LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.MATCH_PARENT,
-            0, 0.3f
-        )
-        params.setMargins(context.dpToPixels(13f).toInt(), 0, context.dpToPixels(13f).toInt(), 0)
-
         for (i in 0 until list.childCount) {
             val cardView = list.getChildAt(i) as CardView
             if(idx == i) {
+                val params = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    0, 0.3f
+                )
+                params.setMargins(context.dpToPixels(13f).toInt(), 0, context.dpToPixels(13f).toInt(), 0)
+
                 cardView.apply {
                     layoutParams = params
                     cardElevation = context.dpToPixels(8f)

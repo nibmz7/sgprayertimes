@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
 import com.nibmz7gmail.sgprayertimemusollah.core.data.LocationLiveData
+import com.nibmz7gmail.sgprayertimemusollah.core.data.qiblafinder.COMPASS_UNSUPPORTED
 import com.nibmz7gmail.sgprayertimemusollah.core.data.qiblafinder.QiblaCompass
 import com.nibmz7gmail.sgprayertimemusollah.core.data.qiblafinder.QiblaError
 import com.nibmz7gmail.sgprayertimemusollah.core.result.Result
@@ -27,7 +28,8 @@ class QiblaViewModel @Inject constructor(
                 _calendarDataObservable.value = Result.Error(QiblaError.NULL)
             }
             else {
-                qiblaCompass.start(it)
+                if(qiblaCompass.accuracy.value != COMPASS_UNSUPPORTED)
+                    qiblaCompass.start(it)
             }
         }
         _calendarDataObservable.addSource(qiblaCompass) {

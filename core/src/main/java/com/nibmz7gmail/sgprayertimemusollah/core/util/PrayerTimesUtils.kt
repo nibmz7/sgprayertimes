@@ -63,8 +63,7 @@ object PrayerTimesUtils {
         } catch (e: Exception){
             Timber.e(e, "Error finding active prayer time")
         } finally {
-            Timber.i("$activeTime")
-            return Pair(activeTime, infoText)
+            return Pair(activeTime.toTimeIdx(), infoText)
         }
 
     }
@@ -102,8 +101,8 @@ object PrayerTimesUtils {
     }
 
     fun CalendarData.toBeautifiedDate() : String {
-        val dfInput = SimpleDateFormat("dd/M/yyyy", java.util.Locale.getDefault())
-        val dfOutput = SimpleDateFormat("EEEE, dd MMM yyyy", java.util.Locale.getDefault())
+        val dfInput = SimpleDateFormat("dd/M/yyyy", Locale.getDefault())
+        val dfOutput = SimpleDateFormat("EEEE, dd MMM yyyy", Locale.getDefault())
         val parsedDate = dfInput.parse(this.date)
         return dfOutput.format(parsedDate)
     }
