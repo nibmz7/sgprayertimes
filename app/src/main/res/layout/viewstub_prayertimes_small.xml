@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.2"
+        android:orientation="vertical"
+        android:gravity="center"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+>
+
+    <ImageView android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:id="@+id/prayerType"
+               android:layout_marginBottom="13dp"
+    />
+
+    <ImageView android:layout_width="wrap_content"
+               android:layout_height="20dp"
+               android:id="@+id/timeIcon"
+               android:layout_marginBottom="13dp"
+    />
+
+    <ImageView android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:id="@+id/prayerTime"
+    />
+
+</LinearLayout>

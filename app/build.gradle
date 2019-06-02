@@ -12,13 +12,13 @@ android {
         applicationId "com.nibmz7gmail.sgprayertimemusollah"
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
-        versionCode 26
-        versionName "3.1"
+        versionCode rootProject.versionCodeBase
+        versionName rootProject.versionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         debug {

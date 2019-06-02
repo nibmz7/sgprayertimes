@@ -53,6 +53,7 @@
         android:layout_height="wrap_content"
         app:menu="@menu/bottom_menu"
         android:id="@+id/navigation_view"
+        android:elevation="0dp"
         >
 
     </com.google.android.material.navigation.NavigationView>
