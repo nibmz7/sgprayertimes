@@ -7,25 +7,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation.RELATIVE_TO_SELF
 import android.view.animation.RotateAnimation
-import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.nibmz7gmail.sgprayertimemusollah.MainActivity
 import com.nibmz7gmail.sgprayertimemusollah.MainNavigationFragment
 import com.nibmz7gmail.sgprayertimemusollah.R
 import com.nibmz7gmail.sgprayertimemusollah.core.data.qiblafinder.COMPASS_UNSUPPORTED
-import com.nibmz7gmail.sgprayertimemusollah.core.model.CalendarData
 import com.nibmz7gmail.sgprayertimemusollah.core.result.Result
 import com.nibmz7gmail.sgprayertimemusollah.core.util.activityViewModelProvider
 import com.nibmz7gmail.sgprayertimemusollah.ui.PermissionFragment
-import com.nibmz7gmail.sgprayertimemusollah.ui.nearby.NearbyFragment
-import com.nibmz7gmail.sgprayertimemusollah.ui.prayertimes.PrayerTimesViewModel
-import dagger.android.support.DaggerFragment
-import kotlinx.android.synthetic.main.fragment_prayertimes.*
 import kotlinx.android.synthetic.main.fragment_qibla.*
 import kotlinx.android.synthetic.main.toolbar.*
-import timber.log.Timber
 import javax.inject.Inject
+
 
 class QiblaFragment : PermissionFragment(), MainNavigationFragment {
 
@@ -67,9 +60,11 @@ class QiblaFragment : PermissionFragment(), MainNavigationFragment {
                     RELATIVE_TO_SELF, 0.5f,
                     RELATIVE_TO_SELF, 0.5f)
                 rotateAnimation.duration = 210
+                rotateAnimation.repeatCount = 0
                 rotateAnimation.fillAfter = true
 
                 needle.startAnimation(rotateAnimation)
+
             }
         })
 

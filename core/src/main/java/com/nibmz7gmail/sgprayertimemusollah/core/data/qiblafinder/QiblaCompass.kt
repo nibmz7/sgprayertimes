@@ -8,11 +8,20 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.nibmz7gmail.sgprayertimemusollah.core.result.Result
 import timber.log.Timber
-import java.lang.IllegalStateException
 import javax.inject.Inject
 import kotlin.math.atan2
 import kotlin.math.cos
 import kotlin.math.sin
+import android.hardware.Sensor.TYPE_ACCELEROMETER
+import android.hardware.Sensor.TYPE_MAGNETIC_FIELD
+import android.hardware.SensorManager
+
+
+
+
+
+
+
 
 enum class QiblaError{
     ACCURACY,
@@ -20,19 +29,30 @@ enum class QiblaError{
 }
 const val COMPASS_UNSUPPORTED =5
 
-//https://stackoverflow.com/questions/4308262/calculate-compass-bearing-heading-to-location-in-android/44249170
+//https://github.com/rhmkds/kiblat-android
 class QiblaCompass @Inject constructor(
     context: Context
 ): SensorEventListener, LiveData<Result<FloatArray>>() {
 
     private var sensorManager: SensorManager? = null
-    private lateinit var sensor: Sensor
+    private lateinit var gsensor: Sensor
+    private lateinit var msensor: Sensor
+
+    private val mGravity = FloatArray(3)
+    private val mGeomagnetic = FloatArray(3)
+    private val R = FloatArray(9)
+    private val I = FloatArray(9)
+
+    private var azimuth: Float = 0.toFloat()
+    private val azimuthFix: Float = 0.toFloat()
 
     private val target = Location("Kabba Loc")
 
     private var userLoc: Location? = null
 
-    var currentDegree = 0.0f
+    val alpha = 0.97f
+
+    var currentAzimuth = 0.0f
 
     private val _accuracy = MutableLiveData<Int>()
     val accuracy: LiveData<Int>
@@ -44,48 +64,50 @@ class QiblaCompass @Inject constructor(
     }
 
     override fun onSensorChanged(event: SensorEvent) {
-        if(userLoc != null) calibrateCompass(event.values[0])
-    }
+       synchronized(this) {
+           if (event.sensor.type == TYPE_ACCELEROMETER) {
 
-    private fun calibrateCompass(someValue: Float) {
+               mGravity[0] = alpha * mGravity[0] + (1 - alpha) * event.values[0]
+               mGravity[1] = alpha * mGravity[1] + (1 - alpha) * event.values[1]
+               mGravity[2] = alpha * mGravity[2] + (1 - alpha) * event.values[2]
 
-        val geoField = GeomagneticField(
-            userLoc!!.latitude.toFloat(),
-            userLoc!!.longitude.toFloat(),
-            userLoc!!.altitude.toFloat(),
-            System.currentTimeMillis())
+           }
 
-        var head = Math.round(someValue).toFloat()
-        var bearTo = calculateBearingAngle(userLoc!!, target)
-        head -= geoField.declination
+           if (event.sensor.type == TYPE_MAGNETIC_FIELD) {
 
-        if (bearTo < 0) {
-            bearTo += 360
-        }
+               mGeomagnetic[0] = alpha * mGeomagnetic[0] + (1 - alpha) * event.values[0]
+               mGeomagnetic[1] = alpha * mGeomagnetic[1] + (1 - alpha) * event.values[1]
+               mGeomagnetic[2] = alpha * mGeomagnetic[2] + (1 - alpha) * event.values[2]
 
-        var direction = bearTo - head
+           }
 
-        if (direction < 0) {
-            direction += 360
-        }
+           val success = SensorManager.getRotationMatrix(
+               R, I, mGravity,
+               mGeomagnetic
+           )
+           if (success) {
+               val orientation = FloatArray(3)
+               SensorManager.getOrientation(R, orientation)
 
+               azimuth = Math.toDegrees(orientation[0].toDouble()).toFloat() // orientation
+               azimuth = (azimuth + azimuthFix + 360) % 360
 
-        val newValues = floatArrayOf(currentDegree, direction)
-        value = Result.Success(newValues)
-        currentDegree = direction
+               val bearingAngle = calculateBearingAngle(userLoc!!, target)
 
+               value = Result.Success(floatArrayOf(bearingAngle - currentAzimuth, azimuth))
+               currentAzimuth = azimuth
+           }
+
+       }
     }
 
     fun start(location: Location) {
         Timber.i("Compass started")
         userLoc = location
-        sensorManager?.registerListener(this, sensor, SensorManager.SENSOR_DELAY_GAME) //SensorManager.SENSOR_DELAY_Fastest
-    }
-
-    override fun onInactive() {
-        super.onInactive()
-        Timber.i("Compass Paused")
-        sensorManager?.unregisterListener(this)
+        sensorManager?.registerListener(this, gsensor,
+            SensorManager.SENSOR_DELAY_GAME)
+        sensorManager?.registerListener(this, msensor,
+            SensorManager.SENSOR_DELAY_GAME)
     }
 
     private fun calculateBearingAngle(from: Location, to: Location): Float {
@@ -100,6 +122,12 @@ class QiblaCompass @Inject constructor(
         return Math.toDegrees(theta).toFloat()
     }
 
+    override fun onInactive() {
+        super.onInactive()
+        Timber.i("Compass Paused")
+        sensorManager?.unregisterListener(this)
+    }
+
     init {
 
         try {
@@ -107,8 +135,8 @@ class QiblaCompass @Inject constructor(
             target.latitude = 21.422487 //kaaba latitude setting
             target.longitude = 39.826206 //kaaba longitude setting
             sensorManager = context.getSystemService(SENSOR_SERVICE) as SensorManager
-            sensor = sensorManager!!.getDefaultSensor(Sensor.TYPE_ORIENTATION)
-
+            gsensor = sensorManager!!.getDefaultSensor(TYPE_ACCELEROMETER)
+            msensor = sensorManager!!.getDefaultSensor(TYPE_MAGNETIC_FIELD)
         } catch (e: Exception) {
             _accuracy.value = COMPASS_UNSUPPORTED
         }
