@@ -1,4 +1,4 @@
-package com.nibmz7gmail.sgprayertimemusollah.ui.widget
+package com.nibmz7gmail.sgprayertimemusollah.ui.dialogs
 
 import android.content.Intent
 import android.net.Uri

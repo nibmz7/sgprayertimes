@@ -7,16 +7,14 @@ import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatDialogFragment
 import com.nibmz7gmail.sgprayertimemusollah.R
 import com.nibmz7gmail.sgprayertimemusollah.core.model.Mosque
-import com.nibmz7gmail.sgprayertimemusollah.ui.widget.CustomDimDialog
+import com.nibmz7gmail.sgprayertimemusollah.ui.dialogs.CustomDimDialog
 import kotlinx.android.synthetic.main.dialog_mosque_details.*
 import timber.log.Timber
 import java.io.IOException

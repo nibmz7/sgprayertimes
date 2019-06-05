@@ -22,7 +22,7 @@
 
         <activity android:name=".MainActivity" android:theme="@style/AppTheme" />
 
-        <receiver android:name=".WidgetPrayerTimesLarge">
+        <receiver android:name=".ui.widgets.WidgetPrayerTimesLarge" android:label="Widget Prayer Large">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
                 <action android:name="com.nibmz7.sgmasjids.ACTION_REFRESH_WIDGET" />
@@ -31,10 +31,10 @@
 
             <meta-data
                     android:name="android.appwidget.provider"
-                    android:resource="@xml/prayertimes_widget_large" />
+                    android:resource="@xml/prayertimes_widget_large"/>
         </receiver>
 
-        <receiver android:name=".WidgetPrayerTimesSmall">
+        <receiver android:name=".ui.widgets.WidgetPrayerTimesSmall" android:label="Widget Prayer Small">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
                 <action android:name="com.nibmz7.sgmasjids.ACTION_REFRESH_WIDGET" />

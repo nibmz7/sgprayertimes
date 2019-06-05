@@ -1,7 +1,7 @@
 package com.nibmz7gmail.sgprayertimemusollah.di
 
-import com.nibmz7gmail.sgprayertimemusollah.WidgetPrayerTimesLarge
-import com.nibmz7gmail.sgprayertimemusollah.WidgetPrayerTimesSmall
+import com.nibmz7gmail.sgprayertimemusollah.ui.widgets.WidgetPrayerTimesLarge
+import com.nibmz7gmail.sgprayertimemusollah.ui.widgets.WidgetPrayerTimesSmall
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.nibmz7gmail.sgprayertimemusollah.ui.widget
+package com.nibmz7gmail.sgprayertimemusollah.ui.dialogs
 
 import android.content.Context
 import android.graphics.Rect

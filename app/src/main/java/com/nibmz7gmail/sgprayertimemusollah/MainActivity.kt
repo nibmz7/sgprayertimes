@@ -9,24 +9,13 @@ import com.nibmz7gmail.sgprayertimemusollah.core.util.inTransaction
 import com.nibmz7gmail.sgprayertimemusollah.ui.prayertimes.PrayerTimesFragment
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
-import android.view.View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
-import android.view.WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS
-import android.os.Build
-import android.util.Log
-import android.view.View
-import androidx.core.content.ContextCompat
-import android.view.View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
-import android.view.WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS
 import androidx.fragment.app.FragmentTransaction.TRANSIT_FRAGMENT_FADE
 import androidx.fragment.app.FragmentTransaction.TRANSIT_FRAGMENT_OPEN
 import com.nibmz7gmail.sgprayertimemusollah.ui.calendar.CalendarFragment
 import com.nibmz7gmail.sgprayertimemusollah.ui.nearby.NearbyFragment
 import com.nibmz7gmail.sgprayertimemusollah.ui.qibla.QiblaFragment
-import com.nibmz7gmail.sgprayertimemusollah.ui.widget.MenuFragment
+import com.nibmz7gmail.sgprayertimemusollah.ui.dialogs.MenuFragment
 import timber.log.Timber
-import com.google.android.material.bottomsheet.BottomSheetBehavior
-
-
 
 
 class MainActivity : DaggerAppCompatActivity() {
