@@ -35,7 +35,6 @@ class LoadTodaysDataUseCase @Inject constructor(
     private val loadCacheLock = Any()
 
     operator fun invoke(isWidget: Boolean) {
-
         if(!cacheIsUptoDate()) {
             fetchNewData(isWidget)
         } else {
@@ -136,17 +135,8 @@ class LoadTodaysDataUseCase @Inject constructor(
     }
 
     private fun updateWidgets() {
-        refreshWidget(WidgetPrayerTimesSmall::class.java)
-        refreshWidget(WidgetPrayerTimesLarge::class.java)
+        WidgetPrayerTimesSmall.update(context, todaysDataCache)
+        WidgetPrayerTimesLarge.update(context, todaysDataCache)
     }
-
-    private fun refreshWidget(widgetClass: Class<out BaseWidget>) {
-        val intentSync = Intent(context, widgetClass)
-        intentSync.action =
-            ACTION_AUTO_UPDATE
-        val pendingSync = PendingIntent.getBroadcast(context, 0, intentSync, PendingIntent.FLAG_UPDATE_CURRENT)
-        pendingSync.send()
-    }
-
 
 }

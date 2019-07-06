@@ -41,28 +41,65 @@ class WidgetPrayerTimesLarge : BaseWidget() {
         return this.javaClass
     }
 
-    override fun getRootView(context: Context): RemoteViews {
-        return RemoteViews(context.packageName, R.layout.widget_prayer_times_large)
+    override fun updateWidget(context: Context, result: Result<CalendarData>?) {
+        updateLargeWidget(context, result)
     }
 
-    override fun showPrayerTimes(context: Context, views: RemoteViews, result: Result.Success<CalendarData>) {
-        for (i in 0..4) {
-            val prayerTimesView = RemoteViews(context.packageName,
-                R.layout.viewstub_prayertimes_large
-            )
-            context.apply {
-                prayerTimesView.setImageViewBitmap(
-                    R.id.type, getFontBitmap(24f, white,
-                        QS_MEDIUM, TIME_OF_DAY[i]))
-                prayerTimesView.setImageViewBitmap(
-                    R.id.time, getFontBitmap(20f, white,
-                        QS_LIGHT, result.data.prayerTimes[i]))
-                prayerTimesView.setImageViewResource(R.id.time_icon, TIME_ICONS[i])
-                prayerTimesView.setInt(
-                    R.id.time_color, "setBackgroundResource",
-                    TIME_COLOUR[i])
-            }
-            views.addView(R.id.prayer_list, prayerTimesView)
+    companion object {
+        fun update(context: Context, result: Result<CalendarData>?) {
+            updateLargeWidget(context, result)
         }
+    }
+
+}
+
+private fun updateLargeWidget(
+    context: Context,
+    result: Result<CalendarData>?
+) {
+    val views = RemoteViews(context.packageName, R.layout.widget_prayer_times_large)
+
+    val appWidgetManager = AppWidgetManager.getInstance(context.applicationContext)
+    val thisWidget = ComponentName(context.applicationContext, WidgetPrayerTimesLarge::class.java)
+    val appWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget)
+    if (appWidgetIds != null && appWidgetIds.isNotEmpty()) {
+        createPrayerWidget(
+            context,
+            views,
+            result,
+            WidgetPrayerTimesLarge::class.java,
+            showPrayerTimes
+        )
+    } else return
+
+    for (appWidgetId in appWidgetIds) {
+        appWidgetManager.updateAppWidget(appWidgetId, views)
+    }
+}
+
+private val showPrayerTimes = {
+    context: Context,
+    views: RemoteViews,
+    result: Result.Success<CalendarData> ->
+
+    views.removeAllViews(R.id.prayer_list)
+
+    for (i in 0..4) {
+        val prayerTimesView = RemoteViews(context.packageName,
+            R.layout.viewstub_prayertimes_large
+        )
+        context.apply {
+            prayerTimesView.setImageViewBitmap(
+                R.id.type, getFontBitmap(24f, white,
+                    QS_MEDIUM, TIME_OF_DAY[i]))
+            prayerTimesView.setImageViewBitmap(
+                R.id.time, getFontBitmap(20f, white,
+                    QS_LIGHT, result.data.prayerTimes[i]))
+            prayerTimesView.setImageViewResource(R.id.time_icon, TIME_ICONS[i])
+            prayerTimesView.setInt(
+                R.id.time_color, "setBackgroundResource",
+                TIME_COLOUR[i])
+        }
+        views.addView(R.id.prayer_list, prayerTimesView)
     }
 }

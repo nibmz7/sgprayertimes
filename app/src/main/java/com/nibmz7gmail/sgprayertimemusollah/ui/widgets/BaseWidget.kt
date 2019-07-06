@@ -15,7 +15,6 @@ import com.nibmz7gmail.sgprayertimemusollah.LauncherActivity
 import com.nibmz7gmail.sgprayertimemusollah.R
 import com.nibmz7gmail.sgprayertimemusollah.core.model.CalendarData
 import com.nibmz7gmail.sgprayertimemusollah.core.result.Result
-import com.nibmz7gmail.sgprayertimemusollah.core.util.PrayerTimesUtils
 import com.nibmz7gmail.sgprayertimemusollah.core.util.PrayerTimesUtils.toBeautifiedDate
 import com.nibmz7gmail.sgprayertimemusollah.core.util.PrayerTimesUtils.toHijriDate
 import com.nibmz7gmail.sgprayertimemusollah.core.util.getFontBitmap
@@ -36,28 +35,9 @@ abstract class BaseWidget: AppWidgetProvider()  {
         context: Context
     )
 
-    abstract fun showPrayerTimes(context: Context, views: RemoteViews, result: Result.Success<CalendarData>)
+    abstract fun updateWidget(context: Context, result: Result<CalendarData>?)
 
     abstract fun getWidgetClass(): Class<out BaseWidget>
-
-    abstract fun getRootView(context: Context): RemoteViews
-
-    override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
-        Timber.i("OnUpdate Called")
-        val cacheExists = loadTodaysDataUseCase.cacheIsUptoDate()
-
-        val result = if(cacheExists) {
-            loadTodaysDataUseCase.getCachedDate()
-        } else null
-
-        for (appWidgetId in appWidgetIds) {
-            updatePrayerWidget(context, appWidgetManager, appWidgetId, result)
-        }
-
-        if(result == null) loadTodaysDataUseCase(true)
-
-        super.onUpdate(context, appWidgetManager, appWidgetIds)
-    }
 
     override fun onEnabled(context: Context) {
         setAlarm(context)
@@ -66,6 +46,22 @@ abstract class BaseWidget: AppWidgetProvider()  {
     override fun onDisabled(context: Context) {
         cancelAlarm(context)
     }
+
+
+    override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager?, appWidgetIds: IntArray?) {
+        val cacheExists = loadTodaysDataUseCase.cacheIsUptoDate()
+
+        val result = if(cacheExists) {
+            loadTodaysDataUseCase.getCachedDate()
+        } else null
+
+        updateWidget(context, result)
+
+        if(result == null) loadTodaysDataUseCase(true)
+
+        super.onUpdate(context, appWidgetManager, appWidgetIds)
+    }
+
 
     override fun onReceive(context: Context, intent: Intent) {
         injectWidget(this, context)
@@ -78,7 +74,7 @@ abstract class BaseWidget: AppWidgetProvider()  {
         }
 
         if (ACTION_REFRESH_WIDGET == intent.action || ACTION_AUTO_UPDATE == intent.action) {
-            Timber.i("Refresh Widget called")
+            Timber.i("Refresh Widget called ${intent.action}" )
             val appWidgetManager = AppWidgetManager.getInstance(context.applicationContext)
             val thisWidget = ComponentName(context.applicationContext, getWidgetClass())
             val appWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget)
@@ -96,7 +92,6 @@ abstract class BaseWidget: AppWidgetProvider()  {
     }
 
     private fun setAlarm(context: Context) {
-        Timber.i("Alarm set")
         val intent = Intent(context, getWidgetClass())
         intent.action = ACTION_AUTO_UPDATE
         val alarmIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT) //You need to specify a proper flag for the intent. Or else the intent will become deleted.
@@ -109,101 +104,6 @@ abstract class BaseWidget: AppWidgetProvider()  {
 
         val alarmMgr = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         alarmMgr.setInexactRepeating(AlarmManager.RTC, c.timeInMillis, AlarmManager.INTERVAL_DAY, alarmIntent)
-    }
-
-    private fun updatePrayerWidget(context: Context, appWidgetManager: AppWidgetManager,
-                                   appWidgetId: Int, result: Result<CalendarData>?) {
-        val views = getRootView(context)
-
-        Timber.e("Updating widget ---> $result")
-
-        views.setViewVisibility(R.id.appBar, View.GONE)
-
-        val configIntent = Intent(context, LauncherActivity::class.java)
-        val configPendingIntent = PendingIntent.getActivity(context, 0, configIntent, 0)
-        views.setOnClickPendingIntent(R.id.root, configPendingIntent)
-
-        val intentSync = Intent(context, getWidgetClass())
-        intentSync.action =
-            ACTION_REFRESH_WIDGET
-        val pendingSync = PendingIntent.getBroadcast(context, 0, intentSync, PendingIntent.FLAG_UPDATE_CURRENT) //You need to specify a proper flag for the intent. Or else the intent will become deleted.
-
-        if(result == null) {
-            fetchNewData(
-                context,
-                views,
-                appWidgetManager,
-                appWidgetId
-            )
-            return
-        }
-
-        if(result is Result.Success) {
-
-            val date = result.data.toBeautifiedDate()
-            views.setImageViewBitmap(R.id.header, context.getFontBitmap(13f, white,
-                QS_BOLD,date))
-            val hijriDate = result.data.hijriDate
-            if (hijriDate.eventH == "")
-                views.setImageViewBitmap(
-                    R.id.sub_header,
-                    context.getFontBitmap(11f, white,
-                        QS_BOLD, result.data.toHijriDate())
-                )
-            else {
-                val islamicDate = result.data.toHijriDate() + " (" + hijriDate.eventH + ")"
-                views.setImageViewBitmap(
-                    R.id.sub_header,
-                    context.getFontBitmap(11f, white,
-                        QS_BOLD, islamicDate)
-                )
-            }
-
-            showPrayerTimes(context, views, result)
-
-            views.setViewVisibility(R.id.root_loading, View.GONE)
-            views.setViewVisibility(R.id.appBar, View.VISIBLE)
-            views.setViewVisibility(R.id.prayer_list, View.VISIBLE)
-            views.setOnClickPendingIntent(R.id.refreshButton, pendingSync)
-        }
-        else if(result is Result.Error) {
-            showErrorView(context, views, pendingSync, result)
-        }
-
-        appWidgetManager.updateAppWidget(appWidgetId, views)
-    }
-
-    private fun showErrorView(context: Context, views: RemoteViews, pendingSync: PendingIntent, result: Result.Error) {
-        views.setViewVisibility(R.id.prayer_list, View.GONE)
-        views.setViewVisibility(R.id.appBar, View.GONE)
-        val msg = if(result.errorType == ErrorTypes.NETWORK) R.string.error_network
-        else R.string.error_date
-
-        views.setViewVisibility(R.id.root_loading, View.VISIBLE)
-        views.setViewVisibility(R.id.retryButton, View.VISIBLE)
-        context.apply {
-            val text = getString(msg).split("\n")
-            views.setImageViewBitmap(
-                R.id.info_message,
-                getFontBitmap(15f, grey,
-                    QS_MEDIUM, text[0], text[1])
-            )
-            views.setOnClickPendingIntent(R.id.retryButton, pendingSync)
-        }
-    }
-
-    private fun fetchNewData(context: Context, views: RemoteViews, appWidgetManager: AppWidgetManager, appWidgetId: Int) {
-        val grey = ContextCompat.getColor(context, R.color.grey)
-        views.setViewVisibility(R.id.prayer_list, View.GONE)
-        views.setViewVisibility(R.id.retryButton, View.GONE)
-        views.setViewVisibility(R.id.appBar, View.GONE)
-        views.setViewVisibility(R.id.root_loading, View.VISIBLE)
-        views.setImageViewBitmap(
-            R.id.info_message,
-            context.getFontBitmap(15f, grey,
-                QS_MEDIUM, "Fetching data...")
-        )
-        appWidgetManager.updateAppWidget(appWidgetId, views)
     }
 
 }
@@ -229,3 +129,98 @@ val TIME_COLOUR = arrayOf(
     R.drawable.abg4,
     R.drawable.abg5
 )
+
+fun createPrayerWidget(
+    context: Context,
+    views: RemoteViews,
+    result: Result<CalendarData>?,
+    widgetClass: Class<out BaseWidget>,
+    showPrayerTimes: (Context, RemoteViews, Result.Success<CalendarData>) -> Unit
+) {
+
+    Timber.e("Updating widget ---> $result")
+
+    views.setViewVisibility(R.id.appBar, View.GONE)
+
+    val configIntent = Intent(context, LauncherActivity::class.java)
+    val configPendingIntent = PendingIntent.getActivity(context, 0, configIntent, 0)
+    views.setOnClickPendingIntent(R.id.root, configPendingIntent)
+
+    val intentSync = Intent(context, widgetClass)
+    intentSync.action = ACTION_REFRESH_WIDGET
+    val pendingSync = PendingIntent.getBroadcast(context, 0, intentSync, PendingIntent.FLAG_UPDATE_CURRENT) //You need to specify a proper flag for the intent. Or else the intent will become deleted.
+
+    if(result == null) {
+        fetchNewData(
+            context,
+            views
+        )
+        return
+    }
+
+    if(result is Result.Success) {
+
+        val date = result.data.toBeautifiedDate()
+        views.setImageViewBitmap(R.id.header, context.getFontBitmap(13f, white,
+            QS_BOLD,date))
+        val hijriDate = result.data.hijriDate
+        if (hijriDate.eventH == "")
+            views.setImageViewBitmap(
+                R.id.sub_header,
+                context.getFontBitmap(11f, white,
+                    QS_BOLD, result.data.toHijriDate())
+            )
+        else {
+            val islamicDate = result.data.toHijriDate() + " (" + hijriDate.eventH + ")"
+            views.setImageViewBitmap(
+                R.id.sub_header,
+                context.getFontBitmap(11f, white,
+                    QS_BOLD, islamicDate)
+            )
+        }
+
+        showPrayerTimes(context, views, result)
+
+        views.setViewVisibility(R.id.root_loading, View.GONE)
+        views.setViewVisibility(R.id.appBar, View.VISIBLE)
+        views.setViewVisibility(R.id.prayer_list, View.VISIBLE)
+        views.setOnClickPendingIntent(R.id.refreshButton, pendingSync)
+    }
+    else if(result is Result.Error) {
+        showErrorView(context, views, pendingSync, result)
+    }
+
+}
+
+private fun showErrorView(context: Context, views: RemoteViews, pendingSync: PendingIntent, result: Result.Error) {
+    views.setViewVisibility(R.id.prayer_list, View.GONE)
+    views.setViewVisibility(R.id.appBar, View.GONE)
+    val msg = if(result.errorType == ErrorTypes.NETWORK) R.string.error_network
+    else R.string.error_date
+
+    views.setViewVisibility(R.id.root_loading, View.VISIBLE)
+    views.setViewVisibility(R.id.retryButton, View.VISIBLE)
+    context.apply {
+        val text = getString(msg).split("\n")
+        views.setImageViewBitmap(
+            R.id.info_message,
+            getFontBitmap(15f, grey,
+                QS_MEDIUM, text[0], text[1])
+        )
+        views.setOnClickPendingIntent(R.id.retryButton, pendingSync)
+    }
+}
+
+private fun fetchNewData(context: Context, views: RemoteViews) {
+    val grey = ContextCompat.getColor(context, R.color.grey)
+    views.setViewVisibility(R.id.prayer_list, View.GONE)
+    views.setViewVisibility(R.id.retryButton, View.GONE)
+    views.setViewVisibility(R.id.appBar, View.GONE)
+    views.setViewVisibility(R.id.root_loading, View.VISIBLE)
+    views.setImageViewBitmap(
+        R.id.info_message,
+        context.getFontBitmap(15f, grey,
+            QS_MEDIUM, "Fetching data...")
+    )
+}
+
